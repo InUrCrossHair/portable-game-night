@@ -245,11 +245,108 @@ def sic_bo():
     return save_pdf(img,'sic-bo-betting-mat.pdf')
 
 
+def shut_the_box_board():
+    img,d=base('Shut the Box','Printable 1–12 board')
+    y=500
+    tile_w=(W-2*M)//12
+    for i in range(12):
+        x=M+i*tile_w
+        fill=ALT if i%2 else WHITE
+        d.rounded_rectangle([x+8,y,x+tile_w-8,y+360], radius=24, outline=BLACK, width=8, fill=fill)
+        centered(d,(x+8,y,x+tile_w-8,y+260),str(i+1),font(92, True))
+        d.line([x+38,y+285,x+tile_w-38,y+285], fill=BLACK, width=5)
+        centered(d,(x+8,y+286,x+tile_w-8,y+350),'flip',F_TINY)
+    notes(d,M,1050,['Use this as a paper/dry-erase board. Cross off or cover numbers as they are shut.',
+                    'Common setup: use 1–9 for shorter games or 1–12 for the full board.'])
+    return save_pdf(img,'shut-the-box-board.pdf')
+
+
+def knucklebones_board():
+    img,d=base('Knucklebones','Two-player 3x3 board')
+    top=430
+    grid=780; cell=grid//3
+    for side,x0 in [('Player 1',M+180),('Player 2',W-M-180-grid)]:
+        centered(d,(x0,top-110,x0+grid,top-20),side,F_H1)
+        for r in range(3):
+            for c in range(3):
+                x=x0+c*cell; y=top+r*cell
+                fill=ALT if (r+c)%2 else WHITE
+                d.rectangle([x,y,x+cell,y+cell], fill=fill, outline=BLACK, width=8)
+        centered(d,(x0,top+grid+20,x0+grid,top+grid+100),'Column totals',F_SMALL_B)
+        for c in range(3):
+            x=x0+c*cell
+            d.rectangle([x,top+grid+110,x+cell,top+grid+230], outline=BLACK, width=6, fill=WHITE)
+    notes(d,M,2300,['Place dice in your own 3x3 grid. Match values in a column to multiply that column score.',
+                    'When you place a die, remove matching-value dice from your opponent’s same column.'])
+    return save_pdf(img,'knucklebones-board.pdf')
+
+
+def cant_stop_board():
+    img,d=base("Can't Stop",'Number tracks 2 through 12')
+    y=410
+    nums=list(range(2,13))
+    heights={2:3,3:5,4:7,5:9,6:11,7:13,8:11,9:9,10:7,11:5,12:3}
+    col_w=(W-2*M)//len(nums)
+    max_h=13; step=130
+    for i,n in enumerate(nums):
+        x=M+i*col_w
+        centered(d,(x,y-90,x+col_w,y-20),str(n),F_H2)
+        for j in range(heights[n]):
+            yy=y+(max_h-j-1)*step
+            fill=ALT if j%2 else WHITE
+            d.rounded_rectangle([x+14,yy,x+col_w-14,yy+96], radius=20, outline=BLACK, width=5, fill=fill)
+    notes(d,M,2350,['Use tokens/coins as climbers. Longer tracks in the middle reflect the classic odds curve.',
+                    'On your turn, roll 4 dice, make two pairs, and advance those tracks; stop safely or risk losing progress.'])
+    return save_pdf(img,'cant-stop-board.pdf')
+
+
+def qwixx_sheet():
+    img,d=base('Qwixx-Style','Roll-and-write sheet')
+    y=430
+    rows=[('RED','2 3 4 5 6 7 8 9 10 11 12'),('YELLOW','2 3 4 5 6 7 8 9 10 11 12'),('GREEN','12 11 10 9 8 7 6 5 4 3 2'),('BLUE','12 11 10 9 8 7 6 5 4 3 2')]
+    for label,nums in rows:
+        d.rectangle([M,y,W-M,y+95], fill=DARK, outline=BLACK, width=5)
+        d.text((M+20,y+20), label, font=font(44, True), fill=WHITE)
+        values=nums.split()
+        start=M+330; box=(W-M-start)//12
+        for i,v in enumerate(values):
+            x=start+i*box
+            d.rectangle([x,y,x+box,y+95], fill=WHITE if i<11 else ALT, outline=BLACK, width=4)
+            centered(d,(x,y,x+box,y+95),v,F_SMALL_B)
+        y += 180
+    d.text((M, y+40), 'Penalties / misses', font=font(50, True), fill=BLACK)
+    for i in range(4):
+        x=M+520+i*180
+        d.rectangle([x,y+25,x+120,y+145], outline=BLACK, width=6, fill=WHITE)
+    notes(d,M,1750,['House-safe note: this is an original Qwixx-style practice/reference sheet, not an official commercial scorepad.',
+                    'Cross out numbers left-to-right on red/yellow and right-to-left on green/blue. Locks are the far-right boxes.'])
+    return save_pdf(img,'qwixx-style-roll-and-write-sheet.pdf')
+
+
+def martinetti_track():
+    img,d=base('Martinetti','Mountain / Matterhorn track')
+    y=520
+    seq=list(range(1,13))+list(range(11,0,-1))
+    box_w=(W-2*M)//12
+    for row in range(2):
+        vals=seq[row*12:(row+1)*12]
+        for i,v in enumerate(vals):
+            x=M+i*box_w
+            yy=y+row*360
+            fill=ALT if (i+row)%2 else WHITE
+            d.rounded_rectangle([x+8,yy,x+box_w-8,yy+170], radius=18, outline=BLACK, width=6, fill=fill)
+            centered(d,(x+8,yy,x+box_w-8,yy+170),str(v),F_H2)
+    notes(d,M,1450,['Race up from 1 to 12, then back down to 1. Mark your current space with a token or pencil.',
+                    'Roll 3 dice. Use single dice or combinations to make the next needed number. First to finish wins.'])
+    return save_pdf(img,'martinetti-mountain-matterhorn-track.pdf')
+
+
 def main():
     if SRC_FARKLE.exists():
         copyfile(SRC_FARKLE, OUT/'farkle-score-sheet.pdf')
     paths=[]
     paths += [skunk(), three_or_more(), crag(), dice_golf(), chicago(), bunco(), liars_ref(), ceelo_ref(), sic_bo()]
+    paths += [shut_the_box_board(), knucklebones_board(), cant_stop_board(), qwixx_sheet(), martinetti_track()]
     paths += [simple_total('Stuck in the Mud','stuck-in-the-mud-score-sheet.pdf','50 short • 100 normal • 200 long','2s and 5s are stuck. Score live dice until all dice are stuck.')]
     paths += [simple_total('Midnight','midnight-score-sheet.pdf','1 and 4 required','Score the four non-required dice. No 1 and 4 = 0 for the round.')]
     paths += [simple_total('Drop Dead','drop-dead-score-sheet.pdf','5-dice survival scoring','2s and 5s are dead. Score live dice until all dice are dead.')]

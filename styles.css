@@ -109,7 +109,8 @@ h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
   gap: 10px;
 }
 
-.mini-link-row a {
+.mini-link-row a,
+.download-link {
   display: inline-block;
   padding: 10px 14px;
   border: 1px solid var(--line);

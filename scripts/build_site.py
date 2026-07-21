@@ -20,10 +20,10 @@ GAMES = [
     dict(name='Tenzi', slug='tenzi', players='2+ players', player_tags=['2 Players','3+ Players'], dice='10 dice per player', time='Under 5 min', complexity='Very Easy', vibe='Speed party chaos', tags=['Dice','2 Players','3+ Players','Speed','Party','Kids','Very Easy'], needs=['10 dice per player'], printables=[], status='Ready'),
     dict(name='Bunco', slug='bunco', players='Group game', player_tags=['3+ Players','Teams'], dice='3 dice per table', time='30+ min', complexity='Easy', vibe='Large social group game', tags=['Dice','3+ Players','Teams','Party','Scorecard','Additional Items Required'], needs=['3 dice per table','Score sheets','Pen or pencil'], printables=['Scoresheet PDF'], status='Needs printable'),
     dict(name='Craps', slug='craps', players='1+ players', player_tags=['1 Player','2 Players','3+ Players'], dice='2 dice', time='Variable', complexity='Moderate', vibe='Casino-style pass line', tags=['Dice','1 Player','2 Players','3+ Players','Casino Style','Tokens/Chips','Additional Items Required'], needs=['2 dice','Optional tokens/chips'], printables=['Pass Line rules reference'], status='Ready; needs printable'),
-    dict(name='Knucklebones', slug='knucklebones', players='2 players', player_tags=['2 Players'], dice='18 dice ideal', time='5–15 min', complexity='Moderate', vibe='Tactical head-to-head', tags=['Dice','2 Players','Tactical','Printable Board','Additional Items Required'], needs=['18 dice ideal','3x3 grid per player'], printables=['Printable board'], status='Needs printable'),
-    dict(name='Can’t Stop', slug='cant-stop', players='2–4 players', player_tags=['2 Players','3+ Players'], dice='4 dice', time='20–40 min', complexity='Moderate', vibe='Push your luck board race', tags=['Dice','2 Players','3+ Players','Push Your Luck','Tactical','Printable Board'], needs=['4 dice','Number track from 2 to 12','Markers'], printables=['Printable board'], status='Needs printable'),
-    dict(name='Shut the Box', slug='shut-the-box', players='1+ players', player_tags=['1 Player','2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Easy', vibe='Fast math puzzle', tags=['Dice','1 Player','2 Players','3+ Players','Tactical','Printable Board'], needs=['2 dice','Board or paper numbers 1–9/12'], printables=['Printable board'], status='Needs printable'),
-    dict(name='Qwixx-Style Roll-and-Write', slug='qwixx-style-roll-and-write', players='2–5 players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Moderate', vibe='Roll-and-write score rows', tags=['Dice','2 Players','3+ Players','Scorecard','Tactical','Scoresheet PDF'], needs=['6 dice','Score sheets','Pen or pencil'], printables=['Scoresheet PDF'], status='Needs printable / house-safe wording'),
+    dict(name='Knucklebones', slug='knucklebones', players='2 players', player_tags=['2 Players'], dice='18 dice ideal', time='5–15 min', complexity='Moderate', vibe='Tactical head-to-head', tags=['Dice','2 Players','Tactical','Printable Board','Additional Items Required'], needs=['18 dice ideal','3x3 grid per player'], printables=['Printable board'], status='Ready; printable added'),
+    dict(name='Can’t Stop', slug='cant-stop', players='2–4 players', player_tags=['2 Players','3+ Players'], dice='4 dice', time='20–40 min', complexity='Moderate', vibe='Push your luck board race', tags=['Dice','2 Players','3+ Players','Push Your Luck','Tactical','Printable Board'], needs=['4 dice','Number track from 2 to 12','Markers'], printables=['Printable board'], status='Ready; printable added'),
+    dict(name='Shut the Box', slug='shut-the-box', players='1+ players', player_tags=['1 Player','2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Easy', vibe='Fast math puzzle', tags=['Dice','1 Player','2 Players','3+ Players','Tactical','Printable Board'], needs=['2 dice','Board or paper numbers 1–9/12'], printables=['Printable board'], status='Ready; printable added'),
+    dict(name='Qwixx-Style Roll-and-Write', slug='qwixx-style-roll-and-write', players='2–5 players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Moderate', vibe='Roll-and-write score rows', tags=['Dice','2 Players','3+ Players','Scorecard','Tactical','Scoresheet PDF'], needs=['6 dice','Score sheets','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
     dict(name='Martinetti / Mountain / Matterhorn', slug='martinetti-mountain-matterhorn', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='10–20 min', complexity='Easy', vibe='Number-track race', tags=['Dice','2 Players','3+ Players','Tactical','Printable Board'], needs=['3 dice','Paper track','Pen or pencil'], printables=['Printable track'], status='Ready; track variants included'),
     dict(name='Chicago', slug='chicago', players='2+ players', player_tags=['2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Very Easy', vibe='Target-number rounds', tags=['Dice','2 Players','3+ Players','Very Easy','Quick','Scorecard'], needs=['2 dice','Optional score sheet'], printables=['Scoresheet PDF'], status='Needs printable'),
     dict(name='Threes / Thirty', slug='threes-thirty', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5–6 dice', time='5–15 min', complexity='Easy', vibe='Low-score reroll game', tags=['Dice','2 Players','3+ Players','Easy','Quick','Pub Game'], needs=['5 or 6 dice'], printables=[], status='Ready'),
@@ -223,13 +223,55 @@ def layout(title: str, body: str, depth: int = 0, description: str = 'Portable d
 '''
 
 
+PRINTABLE_LINKS = {
+    'farkle': [('Farkle score sheet', 'farkle-score-sheet.pdf')],
+    'liars-dice': [('Liar’s Dice quick reference', 'liars-dice-reference.pdf')],
+    'bunco': [('Bunco score sheet', 'bunco-score-sheet.pdf')],
+    'knucklebones': [('Knucklebones board', 'knucklebones-board.pdf')],
+    'cant-stop': [('Can’t Stop board', 'cant-stop-board.pdf')],
+    'shut-the-box': [('Shut the Box board', 'shut-the-box-board.pdf')],
+    'qwixx-style-roll-and-write': [('Qwixx-style roll-and-write sheet', 'qwixx-style-roll-and-write-sheet.pdf')],
+    'martinetti-mountain-matterhorn': [('Martinetti / Mountain / Matterhorn track', 'martinetti-mountain-matterhorn-track.pdf')],
+    'chicago': [('Chicago score sheet', 'chicago-score-sheet.pdf')],
+    'drop-dead': [('Drop Dead score sheet', 'drop-dead-score-sheet.pdf')],
+    'sevens-out': [('Sevens Out score sheet', 'sevens-out-score-sheet.pdf')],
+    'skunk': [('Skunk score sheet', 'skunk-score-sheet.pdf')],
+    'midnight': [('Midnight score sheet', 'midnight-score-sheet.pdf')],
+    'stuck-in-the-mud': [('Stuck in the Mud score sheet', 'stuck-in-the-mud-score-sheet.pdf')],
+    'three-or-more': [('Three or More score sheet', 'three-or-more-score-sheet.pdf')],
+    'crag': [('Crag scorecard', 'crag-scorecard.pdf')],
+    'dice-golf': [('Dice Golf scorecard', 'dice-golf-scorecard.pdf')],
+    'cee-lo-456': [('Cee-lo ranking reference', 'cee-lo-ranking-reference.pdf')],
+    'sic-bo': [('Sic Bo betting mat', 'sic-bo-betting-mat.pdf')],
+}
+
+
+def display_tags(g: dict) -> list[str]:
+    tags = list(g['tags'])
+    if g['slug'] in PRINTABLE_LINKS and 'Printable Available' not in tags:
+        insert_at = min(3, len(tags))
+        tags.insert(insert_at, 'Printable Available')
+    return tags
+
+
+def printable_items(g: dict, depth: int) -> str:
+    prefix = rel_prefix(depth)
+    links = PRINTABLE_LINKS.get(g['slug'], [])
+    if links:
+        return ''.join(
+            f'<li><a class="download-link" href="{prefix}printables/{filename}">Download {html.escape(label)}</a></li>'
+            for label, filename in links
+        )
+    return '<li>No printable needed or currently planned.</li>'
+
+
 def tag_list(tags: list[str]) -> str:
     return '<div class="tags">' + ''.join(f'<span class="tag">{html.escape(t)}</span>' for t in tags) + '</div>'
 
 
 def game_card(g: dict, depth: int = 0) -> str:
     prefix = rel_prefix(depth)
-    top_tags = g['tags'][:5]
+    top_tags = display_tags(g)[:5]
     return f'''<article class="game-card">
   <div class="card-topline"><span>{html.escape(g['time'])}</span><span>{html.escape(g['complexity'])}</span></div>
   <h2><a href="{prefix}dice/{g['slug']}/">{html.escape(g['name'])}</a></h2>
@@ -302,7 +344,7 @@ def build_game_pages(sections: dict[str, str]) -> None:
     for g in GAMES:
         rules = strip_source_quick_facts(sections.get(g['slug'], ''))
         rules_html = md_to_html(rules) if rules else '<p>Rules content still needs to be imported.</p>'
-        printable_items = ''.join(f'<li>{html.escape(p)}</li>' for p in (g['printables'] or ['No printable currently planned.']))
+        printable_downloads = printable_items(g, depth=2)
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
         body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Dice Games</a></p>
 <article class="game-page">
@@ -310,7 +352,7 @@ def build_game_pages(sections: dict[str, str]) -> None:
     <p class="eyebrow">Dice game</p>
     <h1>{html.escape(g['name'])}</h1>
     <p>{html.escape(g['vibe'])}</p>
-    {tag_list(g['tags'])}
+    {tag_list(display_tags(g))}
   </header>
 
   <section class="quick-facts panel">
@@ -330,8 +372,8 @@ def build_game_pages(sections: dict[str, str]) -> None:
       <ul>{needs_items}</ul>
     </div>
     <div>
-      <h2>Planned printables</h2>
-      <ul>{printable_items}</ul>
+      <h2>Printable downloads</h2>
+      <ul>{printable_downloads}</ul>
     </div>
   </section>
 
