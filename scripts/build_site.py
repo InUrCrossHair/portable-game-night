@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path('/mnt/c/Users/code3/OneDrive/Desktop/Atlas_Project_Records/Card-Dice Games/dice_games.md')
 
 GAMES = [
-    dict(name='Farkle', slug='farkle', players='2+ players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Easy', vibe='Push your luck scoring', tags=['Dice','2 Players','3+ Players','Push Your Luck','Easy','Score Chart PDF','Scoresheet PDF'], needs=['6 dice','Pen or pencil','Score sheet'], printables=['Score chart PDF','Scoresheet PDF'], status='Needs printable'),
+    dict(name='Farkle', slug='farkle', players='2+ players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Easy', vibe='Push your luck scoring', tags=['Dice','2 Players','3+ Players','Push Your Luck','Easy','Score Chart PDF','Scoresheet PDF'], needs=['6 dice','Pen or pencil','Score sheet'], printables=['Farkle score sheet PDF'], status='Ready; official score sheet added'),
     dict(name='Liar’s Dice / Perudo', slug='liars-dice', players='3–6 ideal', player_tags=['3+ Players'], dice='5 dice per player', time='15–30 min', complexity='Easy', vibe='Bluffing and table talk', tags=['Dice','3+ Players','Bluffing','Party','Dice Cups','Wild 1s','Drinking Variant','Additional Items Required'], needs=['5 dice per player','Opaque dice cup per player'], printables=['Rules reference'], status='Ready; elimination and drinking variants'),
     dict(name='Ship, Captain, and Crew', slug='ship-captain-and-crew', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='5–15 min', complexity='Very Easy', vibe='Quick pub game', tags=['Dice','2 Players','3+ Players','Pub Game','Very Easy','Quick'], needs=['5 dice'], printables=[], status='Ready'),
     dict(name='Pig', slug='pig', players='2+ players', player_tags=['2 Players','3+ Players'], dice='1–2 dice', time='5–20 min', complexity='Very Easy', vibe='Simple push your luck', tags=['Dice','2 Players','3+ Players','Push Your Luck','Very Easy','Quick'], needs=['1 die for classic Pig','2 dice for two-dice Pig'], printables=[], status='Ready'),
@@ -234,6 +234,7 @@ def build_home() -> None:
     <a href="dice/">Browse dice games</a>
     <a href="players/2-players/">Find 2-player games</a>
     <a href="players/3-plus/">Find group games</a>
+    <a href="printables/">Download printables</a>
   </div>
 </section>'''
     write(ROOT / 'index.html', layout('Home', body, 0, 'Portable dice and card game rules for travel and game nights.'))
