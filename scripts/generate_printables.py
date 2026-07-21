@@ -58,13 +58,23 @@ def centered(draw, box, text, fnt, fill=BLACK):
 
 
 def header(draw, title, subtitle=None):
-    draw_die(draw, M+390, 50, 120, 5)
-    draw_die(draw, M+510, 105, 120, 2)
-    draw_die(draw, W-M-630, 105, 120, 5)
-    draw_die(draw, W-M-510, 50, 120, 6)
-    centered(draw, (M, 55, W-M, 220), title, F_TITLE)
+    # Corner dice keep the Cody/Farkle style without colliding with long titles.
+    die = 96
+    draw_die(draw, M+20, 52, die, 5)
+    draw_die(draw, M+130, 96, die, 2)
+    draw_die(draw, W-M-226, 96, die, 5)
+    draw_die(draw, W-M-116, 52, die, 6)
+
+    title_font = F_TITLE
+    max_title_w = W - 2*M - 560
+    while draw.textbbox((0, 0), title, font=title_font)[2] > max_title_w and title_font.size > 92:
+        title_font = font(title_font.size - 8, True)
+    centered(draw, (M+270, 58, W-M-270, 220), title, title_font)
     if subtitle:
-        centered(draw, (M, 210, W-M, 275), subtitle, F_SMALL)
+        sub_font = F_SMALL
+        while draw.textbbox((0, 0), subtitle, font=sub_font)[2] > W - 2*M - 120 and sub_font.size > 28:
+            sub_font = font(sub_font.size - 2)
+        centered(draw, (M, 214, W-M, 276), subtitle, sub_font)
 
 
 def draw_table(draw, x, y, col_widths, row_h, headers, rows, shaded=True):
@@ -341,12 +351,124 @@ def martinetti_track():
     return save_pdf(img,'martinetti-mountain-matterhorn-track.pdf')
 
 
+def generic_reference(title, filename, subtitle, lines):
+    img,d=base(title, subtitle)
+    y=380
+    d.rounded_rectangle([M,y,W-M,y+2050], radius=28, outline=BLACK, width=8, fill=WHITE)
+    yy=y+70
+    for i,line in enumerate(lines, 1):
+        if line.startswith('## '):
+            yy += 35
+            d.text((M+70, yy), line[3:], font=F_H2, fill=BLACK)
+            yy += 90
+        else:
+            d.text((M+90, yy), f'• {line}', font=F_BODY, fill=BLACK)
+            yy += 82
+    return save_pdf(img, filename)
+
+
+def yahtzee_yacht_score_sheet():
+    img,d=base('Yahtzee / Yacht','Classic 5-dice score sheet')
+    y=330
+    cats=['Ones','Twos','Threes','Fours','Fives','Sixes','Upper Bonus','Upper Total','3 of a Kind','4 of a Kind','Full House','Small Straight','Large Straight','Yahtzee / Yacht','Chance','TOTAL']
+    cols=[500,340,340,340,340,340]
+    end=draw_table(d,M,y,cols,115,['Category','P1','P2','P3','P4','P5'],len(cats))
+    label_rows(d,M,y,115,cats,F_TINY)
+    notes(d,M,end+35,['Use your preferred Yacht/Yahtzee scoring. Common: upper bonus at 63+, Full House=25, Small Straight=30, Large Straight=40, Yahtzee=50.'])
+    return save_pdf(img,'yahtzee-yacht-score-sheet.pdf')
+
+
+def beetle_sheet():
+    img,d=base('Beetle','Drawing sheet')
+    y=410
+    for i,x in enumerate([M+80, W//2+40],1):
+        centered(d,(x,y-100,x+900,y-25),f'Player {i}',F_H1)
+        d.rounded_rectangle([x,y,x+900,y+1000], radius=28, outline=BLACK, width=8, fill=WHITE)
+        # light guide: body/head circles and leg lines
+        d.ellipse([x+330,y+330,x+570,y+570], outline=ALT, width=6)
+        d.ellipse([x+390,y+200,x+510,y+320], outline=ALT, width=5)
+        for ly in [430,500,570]:
+            d.line([x+330,y+ly,x+170,y+ly-80], fill=ALT, width=4)
+            d.line([x+570,y+ly,x+730,y+ly-80], fill=ALT, width=4)
+    notes(d,M,1600,['Suggested roll map: 1=body, 2=head, 3=leg, 4=eye, 5=antenna, 6=tail/wing.',
+                    'You must draw the body before other parts. First completed beetle wins.'])
+    return save_pdf(img,'beetle-drawing-sheet.pdf')
+
+
+def poker_dice_ref():
+    return generic_reference('Poker Dice','poker-dice-ranking-reference.pdf','Hand ranking reference',[
+        'Five of a kind', 'Four of a kind', 'Full house', 'Straight: 1-2-3-4-5 or 2-3-4-5-6',
+        'Three of a kind', 'Two pair', 'One pair', 'High die',
+        'Roll up to three times total. Keep any dice between rolls. Best hand wins the round.'
+    ])
+
+
+def remaining_quick_refs():
+    return [
+        generic_reference('Ship, Captain, Crew','ship-captain-and-crew-reference.pdf','5-dice pub game quick reference',[
+            'Roll up to three times total.', 'You must lock in 6 as Ship, then 5 as Captain, then 4 as Crew.',
+            'After 6-5-4 are secured, the remaining two dice are cargo.', 'Highest cargo total wins the round. No ship/captain/crew = score 0.'
+        ]),
+        generic_reference('Pig','pig-reference.pdf','Push-your-luck quick reference',[
+            'Roll one die repeatedly and add the roll to your temporary turn score.',
+            'After any safe roll, choose to bank your turn points or roll again.',
+            'Roll a 1 and lose unbanked turn points; your turn ends.',
+            'First to 100 points wins. For two-dice Pig, a single 1 ends the turn; double 1s can reset total score.'
+        ]),
+        generic_reference('Going to Boston','going-to-boston-reference.pdf','3-dice family filler',[
+            'Roll 3 dice and keep the highest die.', 'Roll the remaining 2 dice and keep the highest die.',
+            'Roll the final die. Add all three kept dice for your score.', 'Highest score wins the round. Play best of 5 or first to 50.'
+        ]),
+        generic_reference('Mia','mia-reference.pdf','2-dice bluffing quick reference',[
+            'Rolls are read high die first: 6 and 4 = 64.', 'Ranking: 21/Mia, then doubles 66 down to 11, then normal rolls 65 down to 31.',
+            'Announce a higher roll than the previous player, truthfully or by bluffing.', 'Challenge: if the announcement was false, roller loses a life; if true, challenger loses a life.',
+            'Each player starts with 3 lives. Last player with lives wins.'
+        ]),
+        generic_reference('Tenzi','tenzi-reference.pdf','Speed dice quick reference',[
+            'Each player starts with 10 dice.', 'Choose a target number after your first roll.',
+            'Keep dice showing your target number and reroll the rest as fast as possible.',
+            'First player with all 10 dice showing the target number yells Tenzi and wins.'
+        ]),
+        generic_reference('Craps','craps-pass-line-reference.pdf','Simplified Pass Line reference',[
+            'Come-out roll: 7 or 11 wins; 2, 3, or 12 loses.',
+            'Any 4, 5, 6, 8, 9, or 10 becomes the point.',
+            'After a point is set, rolling the point again wins; rolling 7 loses.',
+            'Other numbers do nothing. Use points or fake chips for casual play.'
+        ]),
+        generic_reference('Threes / Thirty','threes-thirty-reference.pdf','Low-score reroll game',[
+            'Roll 5 or 6 dice, depending on your chosen version.', 'Threes count as 0. All other dice count face value.',
+            'Roll up to three times total, keeping any dice between rolls.', 'Lowest score wins the round.'
+        ]),
+        generic_reference('Beat That','beat-that-reference.pdf','Make the biggest number',[
+            'Roll 2 to 4 dice.', 'Arrange the dice into the largest possible number.',
+            'Example with 5, 3, 1: the best number is 531.', 'Highest number wins the round. Play best of 5.'
+        ]),
+        generic_reference('Aces in the Pot','aces-in-the-pot-reference.pdf','Token passing quick reference',[
+            'Each player starts with 3 tokens.', 'Roll 2 dice on your turn.',
+            'Each 1 sends one token to the center pot.', 'Each 6 passes one token to the player on your left.',
+            'If you have no tokens, skip your turn but re-enter if someone passes you a token.', 'Last player with tokens wins.'
+        ]),
+        generic_reference('Left Center Right','left-center-right-reference.pdf','Standard-dice token passing',[
+            'Each player starts with 3 tokens.', 'Roll one die per token you have, up to 3 dice.',
+            '1 = pass left. 2 = pass right. 3 = center. 4, 5, 6 = keep.',
+            'Players with 0 tokens skip but can re-enter if tokens are passed to them.', 'Last player with tokens wins.'
+        ]),
+        generic_reference('Help Your Neighbor','help-your-neighbor-reference.pdf','Numbered-player token game',[
+            'Give each player 10 tokens and assign player numbers.', 'Roll 3 dice.',
+            'For each die matching a player number, that player removes 1 token.',
+            'Unused numbers do nothing. First player to remove all tokens wins.'
+        ]),
+    ]
+
+
 def main():
     if SRC_FARKLE.exists():
         copyfile(SRC_FARKLE, OUT/'farkle-score-sheet.pdf')
     paths=[]
     paths += [skunk(), three_or_more(), crag(), dice_golf(), chicago(), bunco(), liars_ref(), ceelo_ref(), sic_bo()]
     paths += [shut_the_box_board(), knucklebones_board(), cant_stop_board(), qwixx_sheet(), martinetti_track()]
+    paths += [yahtzee_yacht_score_sheet(), beetle_sheet(), poker_dice_ref()]
+    paths += remaining_quick_refs()
     paths += [simple_total('Stuck in the Mud','stuck-in-the-mud-score-sheet.pdf','50 short • 100 normal • 200 long','2s and 5s are stuck. Score live dice until all dice are stuck.')]
     paths += [simple_total('Midnight','midnight-score-sheet.pdf','1 and 4 required','Score the four non-required dice. No 1 and 4 = 0 for the round.')]
     paths += [simple_total('Drop Dead','drop-dead-score-sheet.pdf','5-dice survival scoring','2s and 5s are dead. Score live dice until all dice are dead.')]
