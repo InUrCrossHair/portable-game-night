@@ -44,6 +44,39 @@ GAMES = [
     dict(name='Help Your Neighbor', slug='help-your-neighbor', players='3–6 ideal', player_tags=['3+ Players'], dice='Usually 3 dice', time='10–20 min', complexity='Easy', vibe='Light social token play', tags=['Dice','3+ Players','Token Passing','Tokens/Chips','Additional Items Required'], needs=['3 dice','Tokens/chips/coins'], printables=['Rules reference'], status='Ready; needs printable'),
 ]
 
+DIFFICULTY_ORDER = {
+    'Very Easy': 0,
+    'Easy': 1,
+    'Moderate': 2,
+    'Crunchy': 3,
+}
+
+TIME_ORDER = {
+    'Under 5 min': 0,
+    '5–10 min': 1,
+    '5–15 min': 2,
+    '10–20 min': 3,
+    '15–30 min': 4,
+    '20–40 min': 5,
+    '20–45 min': 6,
+    '30+ min': 7,
+    'Variable': 8,
+    'Flexible': 8,
+}
+
+
+def difficulty_sort_key(game: dict) -> tuple[int, int, str]:
+    """Sort easiest games first, then roughly shortest-to-longest, then by name."""
+    return (
+        DIFFICULTY_ORDER.get(game['complexity'], 99),
+        TIME_ORDER.get(game['time'], 99),
+        game['name'].lower(),
+    )
+
+
+def sorted_games(games: list[dict] | None = None) -> list[dict]:
+    return sorted(games or GAMES, key=difficulty_sort_key)
+
 
 def clean_source_lines(text: str) -> str:
     # Handles both raw Markdown and read_file-style line-prefixed dumps if ever used.
@@ -241,12 +274,13 @@ def build_home() -> None:
 
 
 def build_dice_index() -> None:
-    cards = '\n'.join(game_card(g, depth=1) for g in GAMES)
+    games = sorted_games()
+    cards = '\n'.join(game_card(g, depth=1) for g in games)
     body = f'''<p class="breadcrumb"><a href="../">← Home</a></p>
 <header class="hero compact-hero">
   <p class="eyebrow">Normal six-sided dice</p>
   <h1>Dice Games</h1>
-  <p>Browse dice games by player count, components, complexity, and whether they still need a printable or locked house-rule version.</p>
+  <p>Browse dice games by player count, components, complexity, and whether they still need a printable or locked house-rule version. Games are ordered easiest to hardest.</p>
 </header>
 
 <section class="panel stat-panel">
@@ -310,13 +344,13 @@ def build_game_pages(sections: dict[str, str]) -> None:
 
 
 def build_player_page(slug: str, title: str, tag: str) -> None:
-    chosen = [g for g in GAMES if tag in g['player_tags']]
+    chosen = sorted_games([g for g in GAMES if tag in g['player_tags']])
     cards = '\n'.join(game_card(g, depth=2) for g in chosen)
     body = f'''<p class="breadcrumb"><a href="../../">← Home</a></p>
 <header class="hero compact-hero">
   <p class="eyebrow">Browse by player count</p>
   <h1>{html.escape(title)}</h1>
-  <p>Dice games that fit this player count. Card games can be added here later using the same structure.</p>
+  <p>Dice games that fit this player count, ordered easiest to hardest. Card games can be added here later using the same structure.</p>
 </header>
 <section class="game-grid" aria-label="{html.escape(title)}">
 {cards}
