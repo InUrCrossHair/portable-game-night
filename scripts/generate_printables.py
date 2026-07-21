@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'printables'
 OUT.mkdir(exist_ok=True)
-SRC_FARKLE = Path('/home/inurcrosshair/.hermes/cache/documents/doc_e5833e79e3bb_Score Sheet.pdf')
+SRC_FARKLE = Path('/mnt/c/Users/code3/OneDrive/Desktop/Atlas_Project_Records/Card-Dice Games/_source_documents/farkle-official-score-sheet.pdf')
 
 W, H = 2550, 3300  # 8.5x11 at 300 DPI
 M = 110
