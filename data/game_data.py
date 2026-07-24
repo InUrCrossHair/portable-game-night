@@ -677,7 +677,166 @@ GAMES = [{'name': 'Farkle',
                 '</ol>\n'
                 '<h2>Scoring</h2>\n'
                 '<p>Score like bowling if you know standard bowling scoring, or simply total pins '
-                'knocked down over 10 frames for a quick version.</p>'}]
+                'knocked down over 10 frames for a quick version.</p>'},
+ {'name': 'Cho-Han',
+  'slug': 'cho-han',
+  'players': '2+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'dice': '2 dice',
+  'time': '5–15 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Odd-or-even dice call',
+  'tags': ['Dice', '2 Players', '3+ Players', 'Party', 'Betting', 'Very Easy', 'Quick'],
+  'needs': ['2 dice', 'Cup or bowl', 'Optional tokens/candy/coins'],
+  'printables': ['Rules reference'],
+  'status': 'Ready; casual odd/even token rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Guess whether the total of two dice will be odd or even.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use 2 dice and a cup. Players may use candy, coins, chips, or tokens if they '
+                'want a scorekeeping pot.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>The roller shakes the dice under a cup.</li>\n'
+                '<li>Each player calls Cho/even or Han/odd.</li>\n'
+                '<li>Reveal the dice. Correct callers win the round or take one token from the '
+                'pot.</li>\n'
+                '</ol>\n'
+                '<h2>Party variant</h2>\n'
+                '<p>Let players place one token on odd or even before the reveal. Correct bets win '
+                'even money from a shared bank.</p>'},
+ {'name': 'Chuck-a-Luck',
+  'slug': 'chuck-a-luck',
+  'players': '2+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'dice': '3 dice',
+  'time': '10–25 min',
+  'complexity': 'Easy',
+  'vibe': 'Carnival-style number betting',
+  'tags': ['Dice', '2 Players', '3+ Players', 'Party', 'Betting Mat', 'Tokens/Chips', 'Easy'],
+  'needs': ['3 dice', 'Cup or bowl', 'Tokens/candy/coins', 'Optional betting mat'],
+  'printables': ['Betting mat / reference'],
+  'status': 'Ready; simple number-match payout rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Bet on which number will appear when three dice are rolled.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use 3 dice, tokens, and a simple betting area numbered 1 through 6.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Players place tokens on any number from 1 to 6.</li>\n'
+                '<li>Roll all 3 dice.</li>\n'
+                '<li>A bet wins if the chosen number appears on at least one die.</li>\n'
+                '</ol>\n'
+                '<h2>Recommended payouts</h2>\n'
+                '<ul>\n'
+                '<li>Number appears once: win 1 token per token bet.</li>\n'
+                '<li>Number appears twice: win 2 tokens per token bet.</li>\n'
+                '<li>Number appears three times: win 3 tokens per token bet.</li>\n'
+                '</ul>\n'
+                '<h2>House note</h2>\n'
+                '<p>These even payouts are simple and party-friendly, not casino-accurate. The '
+                'goal is a fun token game, not a math lecture.</p>'},
+ {'name': 'Knock Out Dice',
+  'slug': 'knock-out-dice',
+  'players': '2+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'dice': '2 dice',
+  'time': '5–15 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Avoid your knockout number',
+  'tags': ['Dice', '2 Players', '3+ Players', 'Party', 'Very Easy', 'Quick', 'Scorecard'],
+  'needs': ['2 dice', 'Score sheet or tokens'],
+  'printables': ['Score sheet / quick reference'],
+  'status': 'Ready; target-number elimination rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Score points while avoiding your personal knockout number.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Each player chooses a knockout number from 6, 7, 8, or 9. For a simpler game, '
+                'everyone uses 7.</li>\n'
+                '<li>Choose a target score such as 50.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>On your turn, roll 2 dice and add the total.</li>\n'
+                '<li>If you roll your knockout number, your turn ends and you score 0 for that '
+                'turn.</li>\n'
+                '<li>Otherwise, add the roll to your turn score and roll again or bank.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>First player to the target score wins. For elimination, lose a life whenever '
+                'you roll your knockout number.</p>'},
+ {'name': 'Dice Baseball',
+  'slug': 'dice-baseball',
+  'players': '2 players or teams',
+  'player_tags': ['2 Players', '3+ Players', 'Teams'],
+  'dice': '2 dice',
+  'time': '20–40 min',
+  'complexity': 'Easy',
+  'vibe': 'Baseball inning dice game',
+  'tags': ['Dice', '2 Players', '3+ Players', 'Teams', 'Sports', 'Scorecard', 'Easy'],
+  'needs': ['2 dice', 'Baseball score sheet', 'Tokens or marks for baserunners'],
+  'printables': ['Score sheet'],
+  'status': 'Ready; simple 2d6 baseball table rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Play a baseball game with dice. Score the most runs after 9 innings.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Use 2 dice. Each player or team gets 9 batting innings.</li>\n'
+                '<li>Use tokens, coins, or pencil marks for runners on first, second, and '
+                'third.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Roll 2 dice for each at-bat and apply the result table.</li>\n'
+                '<li>Three outs ends the half-inning. Clear the bases when the inning ends.</li>\n'
+                '<li>Advance runners the number of bases shown by singles, doubles, triples, and '
+                'home runs.</li>\n'
+                '</ol>\n'
+                '<h2>Recommended result table</h2>\n'
+                '<ul>\n'
+                '<li>2 = home run</li>\n'
+                '<li>3 = triple</li>\n'
+                '<li>4 = double</li>\n'
+                '<li>5 or 6 = single</li>\n'
+                '<li>7, 8, or 9 = out</li>\n'
+                '<li>10 = walk</li>\n'
+                '<li>11 = strikeout / out</li>\n'
+                '<li>12 = double play if runner on base, otherwise out</li>\n'
+                '</ul>\n'
+                '<h2>Team play</h2>\n'
+                '<p>For a party, split into two teams and rotate who rolls each at-bat.</p>'},
+ {'name': 'Horse Race Dice',
+  'slug': 'horse-race-dice',
+  'players': '2+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'dice': '2 dice',
+  'time': '10–25 min',
+  'complexity': 'Easy',
+  'vibe': 'Bet on number horses racing to the finish',
+  'tags': ['Dice', '2 Players', '3+ Players', 'Party', 'Race', 'Tokens/Chips', 'Printable Board'],
+  'needs': ['2 dice', 'Horse race track', 'Tokens/candy/coins or markers'],
+  'printables': ['Race track / betting sheet'],
+  'status': 'Ready; 2–12 race track rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Cheer for numbered horses as dice rolls move them toward the finish.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Use horses numbered 2 through 12 on a race track.</li>\n'
+                '<li>Each player chooses or bets tokens on one or more horses.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Roll 2 dice. Move the horse matching the total one space forward.</li>\n'
+                '<li>Keep rolling around the table until one horse reaches the finish.</li>\n'
+                '<li>Players who picked or bet on the winning horse win the round.</li>\n'
+                '</ol>\n'
+                '<h2>Recommended track lengths</h2>\n'
+                '<p>Use probability-balanced lengths: 2 and 12 need 3 spaces; 3 and 11 need 4; 4 '
+                'and 10 need 5; 5 and 9 need 6; 6 and 8 need 7; 7 needs 8.</p>\n'
+                '<h2>Party note</h2>\n'
+                '<p>This is mostly cheering, groaning, and blaming the dice. Which is to say: '
+                'useful science.</p>'}]
 
 CARD_GAMES = [{'name': 'War',
   'slug': 'war',
@@ -1886,4 +2045,226 @@ CARD_GAMES = [{'name': 'War',
                 '</ol>\n'
                 '<h2>Win / score</h2>\n'
                 '<p>Score like bowling, or simply total pins knocked down over 10 frames for a '
-                'quick solo challenge.</p>'}]
+                'quick solo challenge.</p>'},
+ {'name': 'Mao',
+  'slug': 'mao',
+  'players': '3–8+ players',
+  'player_tags': ['3+ Players'],
+  'decks': '1 deck',
+  'optional_deck': 'Helpful for 6+ players',
+  'time': '20–45 min',
+  'complexity': 'Moderate',
+  'vibe': 'Secret-rule chaos shedding game',
+  'tags': ['Cards', '3+ Players', '1 Deck', 'Party', 'House Rules', 'Shedding', 'Bluffing'],
+  'needs': ['1 standard 52-card deck',
+            'Optional second deck for large groups',
+            'One experienced dealer/rule keeper'],
+  'status': 'Ready; starter hidden-rule version with safe table penalties',
+  'order': 350,
+  'rules_html': '<h2>Recommended Portable Game Night variant</h2>\n'
+                '<p>Use Mao as a secret-rule party game, but keep penalties light. The dealer/rule '
+                'keeper knows the starting rules and gives penalty cards when players break them. '
+                'New players should be told only the object and turn structure.</p>\n'
+                '<h2>Object</h2>\n'
+                '<p>Get rid of all your cards while discovering the hidden table rules through '
+                'play.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 5 cards to each player. Place the rest as a draw pile and flip one '
+                'discard.</li>\n'
+                '<li>Choose one rule keeper. They may answer rule questions only by saying “That '
+                'is not the way Mao works” and giving a penalty card when needed.</li>\n'
+                '</ul>\n'
+                '<h2>Public rules to explain</h2>\n'
+                '<ul>\n'
+                '<li>On your turn, play one card matching rank or suit, or draw one card if you '
+                'cannot play.</li>\n'
+                '<li>Say “Mao” when you have one card left.</li>\n'
+                '<li>Do not discuss the hidden rules during the hand unless your table allows a '
+                'learning pause.</li>\n'
+                '</ul>\n'
+                '<h2>Starter hidden rules</h2>\n'
+                '<ul>\n'
+                '<li>Aces reverse direction. Eights skip the next player. Jacks change suit.</li>\n'
+                '<li>Playing a spade requires saying the card name aloud.</li>\n'
+                '<li>Failing to say Mao with one card left earns one penalty card.</li>\n'
+                '</ul>\n'
+                '<h2>Party note</h2>\n'
+                '<p>Mao is funniest when penalties are gentle and the rule keeper is fair. If the '
+                'table gets frustrated, reveal the starter rules after the hand and play '
+                'again.</p>'},
+ {'name': 'Nerts / Pounce',
+  'slug': 'nerts-pounce',
+  'players': '2–8+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'decks': '1 deck per player/team',
+  'optional_deck': 'Requires one distinguishable deck per player or team',
+  'time': '15–30 min',
+  'complexity': 'Moderate',
+  'vibe': 'Simultaneous solitaire race',
+  'tags': ['Cards', '2 Players', '3+ Players', 'Multiple Decks', 'Speed', 'Party', 'Solitaire'],
+  'needs': ['One distinct standard deck per player or team', 'Score sheet', 'Table space'],
+  'status': 'Ready; team-friendly Nerts rules',
+  'order': 360,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Race to empty your Nerts pile by playing cards into shared ace-to-king '
+                'foundations.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Each player/team uses a different-backed deck.</li>\n'
+                '<li>Deal a 13-card Nerts pile with the top card face up. Deal 4 work piles face '
+                'up. Hold the rest as your stock.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Everyone plays at the same time. Build shared center piles from ace to king '
+                'by suit.</li>\n'
+                '<li>Build your own work piles downward by alternating color.</li>\n'
+                '<li>Flip stock cards three at a time to look for playable cards.</li>\n'
+                '<li>When your Nerts pile is empty, call “Nerts!” and the round stops.</li>\n'
+                '</ol>\n'
+                '<h2>Scoring</h2>\n'
+                '<p>Score 1 point for each of your cards in the center. Subtract 2 points for each '
+                'card left in your Nerts pile. First to an agreed total wins.</p>\n'
+                '<h2>Party note</h2>\n'
+                '<p>For a crowded table, play in teams of two: one player manages the work piles, '
+                'the other flips stock and watches the center.</p>'},
+ {'name': 'Slapjack',
+  'slug': 'slapjack',
+  'players': '2–6+ players',
+  'player_tags': ['2 Players', '3+ Players'],
+  'decks': '1 deck',
+  'optional_deck': 'Helpful for 6+ players',
+  'time': '5–15 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Simple reaction-card pile grab',
+  'tags': ['Cards', '2 Players', '3+ Players', '1 Deck', 'Party', 'Speed', 'Very Easy'],
+  'needs': ['1 standard 52-card deck', 'Clear table space'],
+  'status': 'Ready; simple jack-slap rules',
+  'order': 370,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Win the whole deck by being first to slap jacks.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Deal all cards face down as evenly as possible. Players keep personal stacks '
+                'face down and do not look at cards.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Players take turns flipping one card face up to the center pile, flipping '
+                'away from themselves.</li>\n'
+                '<li>When a jack appears, everyone may slap the pile. First hand on the pile wins '
+                'all center cards.</li>\n'
+                '<li>A false slap costs one card, placed under the center pile.</li>\n'
+                '<li>If a player runs out of cards, they may stay in until the next jack; if they '
+                'miss it, they are out.</li>\n'
+                '</ol>\n'
+                '<h2>Safety note</h2>\n'
+                '<p>Use flat-hand slaps and keep drinks away from the pile. This is the friendly '
+                'version, not a knuckle demolition derby.</p>'},
+ {'name': 'Ninety-Nine',
+  'slug': 'ninety-nine-card-game',
+  'players': '3–6+ players',
+  'player_tags': ['3+ Players'],
+  'decks': '1 deck',
+  'optional_deck': 'Helpful for 6+ players',
+  'time': '10–25 min',
+  'complexity': 'Easy',
+  'vibe': 'Keep the running total under 99',
+  'tags': ['Cards', '3+ Players', '1 Deck', 'Party', 'Counting', 'Tokens/Chips', 'Easy'],
+  'needs': ['1 standard 52-card deck', 'Optional tokens/candy/coins for lives'],
+  'status': 'Ready; three-life party rules',
+  'order': 380,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Avoid being the player who makes the running total go over 99.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Give each player 3 lives/tokens. Deal 3 cards to each player.</li>\n'
+                '<li>Place the rest as a draw pile. Start the running total at 0.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>On your turn, play one card, announce the new total, then draw back to 3 '
+                'cards.</li>\n'
+                '<li>If your play makes the total exceed 99, you lose one life and the round '
+                'resets.</li>\n'
+                '</ol>\n'
+                '<h2>Recommended card effects</h2>\n'
+                '<ul>\n'
+                '<li>Aces add 1 or 11. Number cards add face value. Jacks and queens add 10.</li>\n'
+                '<li>Kings keep the total unchanged. Fours reverse direction. Tens subtract 10. '
+                'Nines set the total to exactly 99.</li>\n'
+                '</ul>\n'
+                '<h2>Win</h2>\n'
+                '<p>Last player with lives wins, or play until someone loses all lives and start a '
+                'new round.</p>'},
+ {'name': 'In-Between / Acey Deucey',
+  'slug': 'in-between-acey-deucey',
+  'players': '3–8+ players',
+  'player_tags': ['3+ Players'],
+  'decks': '1 deck',
+  'optional_deck': 'Helpful for 8+ players',
+  'time': '10–25 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Bet whether the next card falls between two cards',
+  'tags': ['Cards', '3+ Players', '1 Deck', 'Party', 'Betting', 'Tokens/Chips', 'Very Easy'],
+  'needs': ['1 standard 52-card deck', 'Candy, coins, chips, or tokens'],
+  'status': 'Ready; casual token-pot rules',
+  'order': 390,
+  'rules_html': '<h2>Portable betting note</h2>\n'
+                '<p>Use candy, coins, chips, or any harmless tokens. Set a small token limit and '
+                'keep it casual.</p>\n'
+                '<h2>Object</h2>\n'
+                '<p>Win tokens by betting that a third card will rank between two dealt '
+                'cards.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Each player antes one token into the pot.</li>\n'
+                '<li>Aces are high by default. Decide before playing whether aces can also be '
+                'low.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Deal two cards face up to the active player.</li>\n'
+                '<li>The player may pass or bet up to the pot that the next card will fall '
+                'strictly between the two ranks.</li>\n'
+                '<li>Deal the third card. If it is between, the player wins their bet from the '
+                'pot. If not, they pay their bet into the pot.</li>\n'
+                '<li>If the first two cards are a pair, the player may pass or bet that the third '
+                'card will be higher or lower.</li>\n'
+                '</ol>\n'
+                '<h2>House rule</h2>\n'
+                '<p>If the third card matches either outside card, the player loses double their '
+                'bet. Skip this rule for a gentler version.</p>'},
+ {'name': 'Knockout Whist',
+  'slug': 'knockout-whist',
+  'players': '3–7+ players',
+  'player_tags': ['3+ Players'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '15–30 min',
+  'complexity': 'Easy',
+  'vibe': 'Light elimination trick-taking',
+  'tags': ['Cards', '3+ Players', '1 Deck', 'Trick-Taking', 'Party', 'Elimination', 'Easy'],
+  'needs': ['1 standard 52-card deck'],
+  'status': 'Ready; simple decreasing-hand elimination rules',
+  'order': 400,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Win at least one trick each hand to stay in the game.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 7 cards to each player for the first hand. Turn one card from the deck '
+                'to set trump.</li>\n'
+                '<li>For each next hand, deal one fewer card: 6, 5, 4, and so on.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Player left of dealer leads. Follow suit if able.</li>\n'
+                '<li>Highest trump wins the trick; if no trump is played, highest card of the led '
+                'suit wins.</li>\n'
+                '<li>The winner of each trick leads the next trick.</li>\n'
+                '</ol>\n'
+                '<h2>Elimination</h2>\n'
+                '<p>Any player who takes zero tricks in a hand is knocked out. Last player '
+                'remaining wins.</p>\n'
+                '<h2>Gentler party variant</h2>\n'
+                '<p>Instead of elimination, give a letter or lose a token for taking zero tricks. '
+                'That keeps everyone at the table longer.</p>'}]

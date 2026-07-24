@@ -663,6 +663,27 @@ def card_printables():
         ('Play', ['Build tableau downward by alternating color.', 'Fill empty tableau spaces from the reserve first.', 'Turn stock three at a time.'])
     ]))
     paths.append(card_score_sheet('Bowling Solitaire', 'bowling-solitaire-score-sheet.pdf', '10-frame card bowling', ['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','TOTAL'], headers=('Frame','Ball 1','Ball 2','Score'), note_lines=['Use A-9 cards only. Remove exposed pin cards matching or totaling the ball card. Score like bowling or count total pins.']))
+    paths.append(generic_reference_wrapped('Mao', 'mao-starter-reference.pdf', 'Secret-rule party starter', [
+        ('Explain only this', ['Match rank or suit, or draw one card.', 'Say Mao when you have one card left.', 'The rule keeper gives penalty cards for broken rules.']),
+        ('Starter hidden rules', ['Aces reverse, eights skip, jacks change suit.', 'Playing a spade requires saying the card name.', 'Keep penalties light and reveal rules after the hand if needed.'])
+    ]))
+    paths.append(card_score_sheet('Nerts / Pounce', 'nerts-score-sheet.pdf', 'Simultaneous solitaire scoring', ['R1','R2','R3','R4','R5','R6','R7','R8','TOTAL'], note_lines=['Score +1 per card in the center. Subtract 2 per card left in your Nerts pile. First to agreed total wins.']))
+    paths.append(generic_reference_wrapped('Slapjack', 'slapjack-reference.pdf', 'Fast jack-slapping game', [
+        ('Rules', ['Deal all cards face down. Players flip one card to the center on their turn.', 'When a jack appears, first flat-hand slap wins the center pile.', 'False slap costs one card under the pile.']),
+        ('Safety', ['Use flat hands and keep drinks away from the pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('Ninety-Nine', 'ninety-nine-reference.pdf', 'Keep the total under 99', [
+        ('Turn', ['Play one card, announce the new total, then draw back to 3 cards.', 'Going over 99 loses a life and resets the round.']),
+        ('Effects', ['A=1 or 11, numbers add face value, J/Q add 10.', 'K holds total, 4 reverses, 10 subtracts 10, 9 sets total to 99.'])
+    ]))
+    paths.append(generic_reference_wrapped('In-Between', 'in-between-reference.pdf', 'Acey Deucey token game', [
+        ('Round', ['Ante one token. Deal two cards face up to the active player.', 'Bet whether the third card falls strictly between them.', 'Inside wins from the pot; outside pays into the pot.']),
+        ('House rule', ['Matching an outside card loses double, or skip that rule for a gentler game.'])
+    ]))
+    paths.append(generic_reference_wrapped('Knockout Whist', 'knockout-whist-reference.pdf', 'Light elimination trick-taking', [
+        ('Round', ['Deal 7 cards first hand, then one fewer each hand.', 'Turn a trump card. Follow suit if able. Highest trump or highest led suit wins.']),
+        ('Goal', ['Take at least one trick each hand.', 'Zero tricks knocks you out, or costs a token in the gentler variant.'])
+    ]))
     return paths
 
 def main():
@@ -690,6 +711,20 @@ def main():
     paths += [simple_total('Solo Farkle Challenge','solo-farkle-challenge-sheet.pdf','10-turn score chase','Play normal Farkle for exactly 10 turns. 3000 decent • 5000 strong • 7500 excellent.')]
     paths += [card_score_sheet('Dice Solitaire', 'dice-solitaire-score-sheet.pdf', 'Five-round solo dice puzzle', ['Ones','Pairs','3 Kind','Straight','Chance','TOTAL'], headers=('Category','Score'), note_lines=['Roll up to three times each round. Use each category once. Straight = 30 for 1-5 or 2-6.'])]
     paths += [card_score_sheet('Bowling Dice', 'bowling-dice-score-sheet.pdf', '10-frame dice bowling', ['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','TOTAL'], headers=('Frame','Ball 1','Ball 2','Score'), note_lines=['Each die showing 4, 5, or 6 knocks down one pin. Strike if all 10 fall on ball 1; spare if all fall by ball 2.'])]
+    paths += [generic_reference_wrapped('Cho-Han', 'cho-han-reference.pdf', 'Odd or even dice call', [
+        ('Call', ['Cho means even. Han means odd.', 'Roll 2 dice under a cup, then reveal the total.']),
+        ('Party scoring', ['Correct callers win the round or take one token from the pot.', 'Keep token values casual: candy, coins, chips, or markers.'])
+    ])]
+    paths += [generic_reference_wrapped('Chuck-a-Luck', 'chuck-a-luck-betting-mat.pdf', 'Betting numbers 1 through 6', [
+        ('Mat', ['Bet on any number: 1, 2, 3, 4, 5, or 6.', 'Roll 3 dice. Your number wins if it appears.']),
+        ('Simple payouts', ['One match pays 1 per token bet.', 'Two matches pay 2 per token bet.', 'Three matches pay 3 per token bet.'])
+    ])]
+    paths += [card_score_sheet('Knock Out Dice', 'knock-out-dice-score-sheet.pdf', 'Avoid your knockout number', ['R1','R2','R3','R4','R5','R6','R7','R8','TOTAL'], note_lines=['Choose knockout number 6, 7, 8, or 9. Rolling it scores 0 for the turn. First to target score wins.'])]
+    paths += [card_score_sheet('Dice Baseball', 'dice-baseball-score-sheet.pdf', '9-inning dice baseball', ['1','2','3','4','5','6','7','8','9','TOTAL'], headers=('Inning','Away','Home'), note_lines=['2=HR, 3=3B, 4=2B, 5/6=1B, 7/8/9=out, 10=walk, 11=out, 12=double play if runner on.'])]
+    paths += [generic_reference_wrapped('Horse Race Dice', 'horse-race-dice-track.pdf', '2–12 race track', [
+        ('Track lengths', ['2/12: 3 spaces. 3/11: 4. 4/10: 5.', '5/9: 6. 6/8: 7. 7: 8 spaces.']),
+        ('Race', ['Players pick or bet on horses numbered 2-12.', 'Roll 2 dice and move the matching horse one space.', 'First horse to finish wins.'])
+    ])]
     print('Generated/copy printables:')
     for p in sorted(OUT.glob('*.pdf')):
         print(p.name, p.stat().st_size)

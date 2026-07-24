@@ -267,6 +267,17 @@ PRINTABLE_LINKS = {
     'pair-pressure-solo-challenge': [('Pair Pressure board / score sheet', 'pair-pressure-board-score-sheet.pdf')],
     'dice-solitaire-patience-dice': [('Dice Solitaire score sheet', 'dice-solitaire-score-sheet.pdf')],
     'bowling-dice': [('Bowling Dice score sheet', 'bowling-dice-score-sheet.pdf')],
+    'cho-han': [('Cho-Han quick reference', 'cho-han-reference.pdf')],
+    'chuck-a-luck': [('Chuck-a-Luck betting mat', 'chuck-a-luck-betting-mat.pdf')],
+    'knock-out-dice': [('Knock Out Dice score sheet', 'knock-out-dice-score-sheet.pdf')],
+    'dice-baseball': [('Dice Baseball score sheet', 'dice-baseball-score-sheet.pdf')],
+    'horse-race-dice': [('Horse Race Dice track', 'horse-race-dice-track.pdf')],
+    'mao': [('Mao starter reference', 'mao-starter-reference.pdf')],
+    'nerts-pounce': [('Nerts score sheet', 'nerts-score-sheet.pdf')],
+    'slapjack': [('Slapjack quick reference', 'slapjack-reference.pdf')],
+    'ninety-nine-card-game': [('Ninety-Nine quick reference', 'ninety-nine-reference.pdf')],
+    'in-between-acey-deucey': [('In-Between quick reference', 'in-between-reference.pdf')],
+    'knockout-whist': [('Knockout Whist quick reference', 'knockout-whist-reference.pdf')],
 
 }
 
