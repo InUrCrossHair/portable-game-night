@@ -241,6 +241,20 @@ PRINTABLE_LINKS = {
     'spades': [('Spades score sheet', 'spades-score-sheet.pdf')],
     'egyptian-rat-screw': [('Egyptian Rat Screw quick reference', 'egyptian-rat-screw-reference.pdf')],
     'spider-solitaire': [('Spider Solitaire setup reference', 'spider-solitaire-reference.pdf')],
+    'twenty-one-dice-blackjack': [('Twenty-One / Dice Blackjack quick reference', 'twenty-one-dice-blackjack-reference.pdf')],
+    'mexico': [('Mexico quick reference', 'mexico-reference.pdf')],
+    'bar-dice': [('Bar Dice ranking reference', 'bar-dice-ranking-reference.pdf')],
+    'cribbage': [('Cribbage score sheet', 'cribbage-score-sheet.pdf')],
+    'casino-cassino': [('Casino / Cassino score sheet', 'casino-cassino-score-sheet.pdf')],
+    'durak': [('Durak quick reference', 'durak-reference.pdf')],
+    'oh-hell-oh-pshaw': [('Oh Hell score sheet', 'oh-hell-score-sheet.pdf')],
+    'euchre': [('Euchre score sheet', 'euchre-score-sheet.pdf')],
+    'thirty-one-scat-blitz': [('Thirty-One quick reference', 'thirty-one-reference.pdf')],
+    'kings-in-the-corner': [('Kings in the Corner quick reference', 'kings-in-the-corner-reference.pdf')],
+    'chase-the-ace': [('Chase the Ace quick reference', 'chase-the-ace-reference.pdf')],
+    'five-card-draw-poker': [('Poker hand ranking / betting reference', 'poker-hand-ranking-reference.pdf')],
+    'texas-holdem': [('Poker hand ranking / betting reference', 'poker-hand-ranking-reference.pdf')],
+    'indian-poker-blind-mans-bluff': [('Indian Poker quick reference', 'indian-poker-reference.pdf')],
 
 }
 
@@ -360,7 +374,7 @@ def build_dice_index() -> None:
 def build_game_pages(sections: dict[str, str]) -> None:
     for g in GAMES:
         rules = strip_source_quick_facts(sections.get(g['slug'], ''))
-        rules_html = md_to_html(rules) if rules else '<p>Rules content still needs to be imported.</p>'
+        rules_html = g.get('rules_html') or (md_to_html(rules) if rules else '<p>Rules content still needs to be imported.</p>')
         printable_downloads = printable_items(g, depth=2)
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
         body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Dice Games</a></p>
@@ -578,7 +592,7 @@ def build_cards_placeholder() -> None:
 
 def main() -> None:
     sections = extract_sections(SOURCE.read_text(encoding='utf-8'))
-    missing = [g['name'] for g in GAMES if g['slug'] not in sections]
+    missing = [g['name'] for g in GAMES if g['slug'] not in sections and not g.get('rules_html')]
     if missing:
         raise SystemExit('Missing source sections: ' + ', '.join(missing))
     build_home()

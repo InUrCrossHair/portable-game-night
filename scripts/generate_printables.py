@@ -606,6 +606,34 @@ def card_printables():
         ('Setup', ['Use two decks. Deal 10 columns: first 4 columns get 6 cards, remaining 6 get 5 cards.', 'Only top cards are face up.']),
         ('Goal', ['Build same-suit descending sequences from king to ace.', 'Remove all 8 completed sequences to win.', 'One suit is easiest, two suits is medium, four suits is full difficulty.'])
     ]))
+    paths.append(card_score_sheet('Cribbage', 'cribbage-score-sheet.pdf', 'Paper scoring to 121', ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','H11','H12','TOTAL'], headers=('Hand','P1','P2'), note_lines=['Score during play and count non-dealer hand, dealer hand, then crib. First to 121 wins.']))
+    paths.append(card_score_sheet('Casino / Cassino', 'casino-cassino-score-sheet.pdf', 'Capture scoring', ['Cards','Spades','Big Casino','Little Casino','Aces','TOTAL'], note_lines=['Most cards=3, most spades=1, 10♦=2, 2♠=1, each ace=1.']))
+    paths.append(generic_reference_wrapped('Durak', 'durak-reference.pdf', '36-card attack and defense', [
+        ('Setup', ['Use 6 through ace in every suit. Deal 6 cards each.', 'Flip one trump card under the draw pile. Lowest trump attacks first.']),
+        ('Battle', ['Defender beats attacks with a higher same-suit card or trump.', 'If all attacks are beaten, discard the battle. If not, defender picks it up.', 'Last player with cards loses.'])
+    ]))
+    paths.append(card_score_sheet('Oh Hell', 'oh-hell-score-sheet.pdf', 'Exact-bid trick-taking', ['7','6','5','4','3','2','1','2','3','4','5','6','7','TOTAL'], note_lines=['Exact bid scores 10 + bid. Missed bid scores 0. Use trump card after deal; no card left means no-trump.']))
+    paths.append(card_score_sheet('Euchre', 'euchre-score-sheet.pdf', 'First team to 10', ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10'], headers=('Hand','Team 1','Team 2'), note_lines=['Makers: 1 point for 3-4 tricks, 2 for all 5. Defenders score 2 for a euchre.']))
+    paths.append(generic_reference_wrapped('Thirty-One', 'thirty-one-reference.pdf', 'Scat / Blitz lives version', [
+        ('Goal', ['Get close to 31 in one suit.', 'A=11, face cards=10, numbers=face value.']),
+        ('Round', ['Draw then discard, or knock instead of drawing.', 'After a knock, everyone else gets one final turn.', 'Lowest hand loses a life; exact 31 makes everyone else lose a life.'])
+    ]))
+    paths.append(generic_reference_wrapped('Kings in the Corner', 'kings-in-the-corner-reference.pdf', 'Shared solitaire layout', [
+        ('Setup', ['Deal 7 cards each. Flip 4 cards around the draw pile in a cross.', 'Corners are reserved for kings.']),
+        ('Play', ['Draw one card, then play descending alternating colors.', 'Only kings start corner piles. Move full piles when legal.', 'First player with no cards wins.'])
+    ]))
+    paths.append(generic_reference_wrapped('Chase the Ace', 'chase-the-ace-reference.pdf', 'Screw Your Neighbor party rules', [
+        ('Round', ['Deal one card to each player. Aces low, kings high.', 'Each player may keep or swap left. A king blocks the swap.', 'Dealer may keep or cut for a new card. Lowest card loses a life.']),
+        ('Win', ['Use 3 lives/tokens. Last player with lives wins.'])
+    ]))
+    paths.append(generic_reference_wrapped('Poker Hands', 'poker-hand-ranking-reference.pdf', 'Casual token-betting reference', [
+        ('Rankings high to low', ['Royal flush, straight flush, four of a kind, full house.', 'Flush, straight, three of a kind, two pair, one pair, high card.']),
+        ('Portable betting', ['Use candy, coins, chips, or harmless tokens.', 'Agree on simple limits before dealing; tokens do not need real-money value.'])
+    ]))
+    paths.append(generic_reference_wrapped('Indian Poker', 'indian-poker-reference.pdf', 'Blind Man’s Bluff party poker', [
+        ('Setup', ['Each player antes one token and gets one card face down.', 'Hold the card to your forehead without looking. Everyone sees yours except you.']),
+        ('Play', ['Bet based on everyone else’s cards and table talk.', 'Remaining players reveal; highest card wins.'])
+    ]))
     return paths
 
 def main():
@@ -621,6 +649,15 @@ def main():
     paths += [simple_total('Midnight','midnight-score-sheet.pdf','1 and 4 required','Score the four non-required dice. No 1 and 4 = 0 for the round.')]
     paths += [simple_total('Drop Dead','drop-dead-score-sheet.pdf','5-dice survival scoring','2s and 5s are dead. Score live dice until all dice are dead.')]
     paths += [simple_total('Sevens Out','sevens-out-score-sheet.pdf','Two-dice push your luck','Rolling a 7 ends the turn and loses unbanked points.')]
+    paths += [simple_total('Twenty-One / Dice Blackjack','twenty-one-dice-blackjack-reference.pdf','Closest to 21 without busting','Roll 2 dice, stop or roll again. Over 21 busts. Closest to 21 wins the round.')]
+    paths += [generic_reference_wrapped('Mexico', 'mexico-reference.pdf', '2-dice bluffing lives game', [
+        ('Ranking', ['21 is Mexico and highest.', 'Doubles rank 66 down to 11.', 'Other rolls are read high die first: 65 down to 31.']),
+        ('Turn', ['Roll secretly and announce a score.', 'Next player may accept and roll higher, or challenge.', 'False announcement loses a life; true announcement makes challenger lose a life.'])
+    ])]
+    paths += [generic_reference_wrapped('Bar Dice', 'bar-dice-ranking-reference.pdf', 'Five-dice pub hand rankings', [
+        ('Turn', ['Roll up to three times, keeping any dice between rolls.', 'Best hand after final roll wins the round.']),
+        ('Rankings', ['Five of a kind, four of a kind, full house.', 'Straight, three of a kind, two pair, one pair, high die.'])
+    ])]
     print('Generated/copy printables:')
     for p in sorted(OUT.glob('*.pdf')):
         print(p.name, p.stat().st_size)
