@@ -255,6 +255,18 @@ PRINTABLE_LINKS = {
     'five-card-draw-poker': [('Poker hand ranking / betting reference', 'poker-hand-ranking-reference.pdf')],
     'texas-holdem': [('Poker hand ranking / betting reference', 'poker-hand-ranking-reference.pdf')],
     'indian-poker-blind-mans-bluff': [('Indian Poker quick reference', 'indian-poker-reference.pdf')],
+    'klondike-solitaire': [('Klondike Solitaire setup reference', 'klondike-solitaire-reference.pdf')],
+    'freecell': [('FreeCell setup reference', 'freecell-reference.pdf')],
+    'pyramid-solitaire': [('Pyramid Solitaire quick reference', 'pyramid-solitaire-reference.pdf')],
+    'accordion-solitaire': [('Accordion Solitaire quick reference', 'accordion-solitaire-reference.pdf')],
+    'clock-solitaire': [('Clock Solitaire setup reference', 'clock-solitaire-reference.pdf')],
+    'golf-solitaire': [('Golf Solitaire quick reference', 'golf-solitaire-reference.pdf')],
+    'canfield-solitaire': [('Canfield Solitaire setup reference', 'canfield-solitaire-reference.pdf')],
+    'bowling-solitaire': [('Bowling Solitaire score sheet', 'bowling-solitaire-score-sheet.pdf')],
+    'solo-farkle-challenge': [('Solo Farkle challenge sheet', 'solo-farkle-challenge-sheet.pdf')],
+    'pair-pressure-solo-challenge': [('Pair Pressure board / score sheet', 'pair-pressure-board-score-sheet.pdf')],
+    'dice-solitaire-patience-dice': [('Dice Solitaire score sheet', 'dice-solitaire-score-sheet.pdf')],
+    'bowling-dice': [('Bowling Dice score sheet', 'bowling-dice-score-sheet.pdf')],
 
 }
 

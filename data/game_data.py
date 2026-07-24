@@ -557,7 +557,127 @@ GAMES = [{'name': 'Farkle',
                 '<li>Two pair</li>\n'
                 '<li>One pair</li>\n'
                 '<li>High die</li>\n'
-                '</ul>'}]
+                '</ul>'},
+ {'name': 'Solo Farkle Challenge',
+  'slug': 'solo-farkle-challenge',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'dice': '6 dice',
+  'time': '10–20 min',
+  'complexity': 'Easy',
+  'vibe': 'Solo target-score push your luck',
+  'tags': ['Dice', '1 Player', 'Push Your Luck', 'Scorecard', 'Easy', '6 Dice'],
+  'needs': ['6 dice', 'Farkle score sheet', 'Pen or pencil'],
+  'printables': ['Score sheet / challenge reference'],
+  'status': 'Ready; 10-turn target-score solo variant',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Score as many points as possible in 10 turns, or try to beat a target '
+                'score.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use the normal Farkle scoring chart. Give yourself exactly 10 turns.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Play each turn like Farkle: roll 6 dice, set aside at least one scoring die '
+                'or combo, then bank or keep rolling.</li>\n'
+                '<li>If you roll no scoring dice, you Farkle and score 0 for that turn.</li>\n'
+                '<li>If all 6 dice score, you may roll all 6 again and keep building the same turn '
+                'score.</li>\n'
+                '</ol>\n'
+                '<h2>Targets</h2>\n'
+                '<ul>\n'
+                '<li>3,000 = decent run</li>\n'
+                '<li>5,000 = strong game</li>\n'
+                '<li>7,500+ = excellent solo score</li>\n'
+                '</ul>'},
+ {'name': 'Pair Pressure Solo Challenge',
+  'slug': 'pair-pressure-solo-challenge',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'dice': '6 dice',
+  'time': '10–20 min',
+  'complexity': 'Moderate',
+  'vibe': 'Solo board-clearing score chase',
+  'tags': ['Dice', '1 Player', 'Push Your Luck', 'Tactical', 'Printable Board', '6 Dice'],
+  'needs': ['6 dice', 'Pair Pressure board / score sheet', 'Tokens or pencil'],
+  'printables': ['Printable board / score sheet'],
+  'status': 'Ready; 10-turn solo challenge variant',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Use the Pair Pressure board to score as many points as possible in 10 '
+                'turns.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use the normal Pair Pressure scoring board from 2 through 12. The board resets '
+                'at the start of every turn.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Roll 6 dice and pair dice to clear numbers 2–12. Each die can only be used '
+                'once until you reroll.</li>\n'
+                '<li>Score each cleared number. If all 6 dice are used successfully, reroll all 6 '
+                'and continue the same turn.</li>\n'
+                '<li>If you reroll and cannot make a playable pair, you bust and score 0 for that '
+                'turn.</li>\n'
+                '<li>Bank whenever you want before rerolling. A full board clear in one turn adds '
+                'the normal board-clear bonus.</li>\n'
+                '</ol>\n'
+                '<h2>Solo scoring</h2>\n'
+                '<p>Play 10 turns. Track your best total, best single turn, and number of '
+                'full-board clears.</p>'},
+ {'name': 'Dice Solitaire / Patience Dice',
+  'slug': 'dice-solitaire-patience-dice',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'dice': '5 dice',
+  'time': '10–20 min',
+  'complexity': 'Easy',
+  'vibe': 'Yahtzee-lite solo score puzzle',
+  'tags': ['Dice', '1 Player', 'Scorecard', 'Easy', '5 Dice', 'Roll-and-Write'],
+  'needs': ['5 dice', 'Score sheet', 'Pen or pencil'],
+  'printables': ['Score sheet'],
+  'status': 'Ready; compact five-category score challenge',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Fill five scoring categories in five rounds for the highest total.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use 5 dice. Write five categories: Ones, Pairs, Three-of-a-kind, Straight, '
+                'Chance.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Each round, roll up to three times, keeping any dice between rolls.</li>\n'
+                '<li>After your final roll, choose one unused category and score it. Each category '
+                'can be used once.</li>\n'
+                '<li>Ones: score 10 points per 1. Pairs: score total of one pair. Three-of-a-kind: '
+                'score total of all dice if you have at least three matching. Straight: 30 points '
+                'for 1-2-3-4-5 or 2-3-4-5-6. Chance: score total of all dice.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Try to beat your personal best. 75+ is solid; 100+ is excellent.</p>'},
+ {'name': 'Bowling Dice',
+  'slug': 'bowling-dice',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'dice': '10 dice ideal; 5 dice works',
+  'time': '10–20 min',
+  'complexity': 'Easy',
+  'vibe': 'Ten-frame solo dice bowling',
+  'tags': ['Dice', '1 Player', 'Scorecard', 'Theme', 'Easy', '10 Dice'],
+  'needs': ['10 dice ideal or 5 dice rolled twice', 'Bowling score sheet or paper'],
+  'printables': ['Score sheet'],
+  'status': 'Ready; simple 10-frame solo bowling rules',
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Play 10 bowling frames using dice as pins knocked down.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Use 10 dice if you have them. If not, use 5 dice and roll twice per ball, '
+                'counting successes.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>For each ball, roll the available dice. Each die showing 4, 5, or 6 knocks '
+                'down one pin.</li>\n'
+                '<li>Frame 1 ball: roll up to 10 dice. Count knocked pins. Remove those '
+                'dice.</li>\n'
+                '<li>If pins remain, roll the remaining dice for ball 2.</li>\n'
+                '<li>Strike if all 10 pins fall on ball 1. Spare if all 10 fall by ball 2.</li>\n'
+                '</ol>\n'
+                '<h2>Scoring</h2>\n'
+                '<p>Score like bowling if you know standard bowling scoring, or simply total pins '
+                'knocked down over 10 frames for a quick version.</p>'}]
 
 CARD_GAMES = [{'name': 'War',
   'slug': 'war',
@@ -1508,4 +1628,262 @@ CARD_GAMES = [{'name': 'War',
                 '</ol>\n'
                 '<h2>Why it works</h2>\n'
                 '<p>It is poker reduced to bluffing and laughter. Good for groups that do not want '
-                'a serious poker night.</p>'}]
+                'a serious poker night.</p>'},
+ {'name': 'Klondike Solitaire',
+  'slug': 'klondike-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '10–25 min',
+  'complexity': 'Easy',
+  'vibe': 'Classic seven-column solitaire',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Tableau', 'Classic', 'Easy'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready; draw-one starter rules with draw-three variant note',
+  'order': 270,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Build all four foundation piles from ace to king by suit.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 7 tableau columns. Column 1 gets 1 card, column 2 gets 2, continuing to '
+                'column 7 with 7 cards.</li>\n'
+                '<li>Only the top card of each tableau column is face up. The remaining cards form '
+                'the stock.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Move face-up tableau cards in descending order and alternating colors.</li>\n'
+                '<li>Move aces to foundations, then build foundations upward by suit.</li>\n'
+                '<li>Empty tableau columns may only be filled with a king or a valid sequence '
+                'starting with a king.</li>\n'
+                '<li>Turn cards from the stock to the waste. Use draw-one for the starter version; '
+                'draw-three is the harder classic variant.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win by moving all cards to the four foundations.</p>'},
+ {'name': 'FreeCell',
+  'slug': 'freecell',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '15–40 min',
+  'complexity': 'Moderate',
+  'vibe': 'Open-information solitaire puzzle',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Tableau', 'Tactical', 'Moderate'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready',
+  'order': 280,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Move all cards to the four foundations, ace to king by suit.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal all 52 cards face up into 8 tableau columns. First 4 columns get 7 '
+                'cards, last 4 get 6 cards.</li>\n'
+                '<li>Leave space for 4 free cells and 4 foundations.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Build tableau columns downward by alternating color.</li>\n'
+                '<li>Move one card at a time, using free cells as temporary holding spaces.</li>\n'
+                '<li>Empty tableau columns can receive any card.</li>\n'
+                '<li>The number of cards you can move as a packed sequence depends on open free '
+                'cells and empty columns.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win by moving every card to the foundations.</p>'},
+ {'name': 'Pyramid Solitaire',
+  'slug': 'pyramid-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '5–15 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Pair cards to total thirteen',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Quick', 'Very Easy', 'Math'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready',
+  'order': 290,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Remove the whole pyramid by pairing exposed cards that total 13.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 28 cards into a pyramid of 7 rows, overlapping so only uncovered cards '
+                'are available.</li>\n'
+                '<li>Place the rest as a stock pile.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Remove pairs of exposed cards totaling 13. Kings are worth 13 and remove '
+                'alone.</li>\n'
+                '<li>Values: ace 1, jack 11, queen 12, king 13.</li>\n'
+                '<li>Turn stock cards one at a time to the waste and pair them with exposed '
+                'pyramid cards or the top waste card if your house rules allow.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win by clearing the pyramid. For an easier version, allow cycling through the '
+                'stock more than once.</p>'},
+ {'name': 'Accordion Solitaire',
+  'slug': 'accordion-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '10–20 min',
+  'complexity': 'Easy',
+  'vibe': 'Compact card-compressing puzzle',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Small Table', 'Puzzle', 'Easy'],
+  'needs': ['1 standard 52-card deck', 'Small table space'],
+  'status': 'Ready',
+  'order': 300,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Compress the entire deck into as few piles as possible, ideally one pile.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<p>Deal cards face up in a row from left to right. You may deal all cards first '
+                'or reveal them one at a time.</p>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>A pile may move onto the pile immediately to its left if the top cards match '
+                'rank or suit.</li>\n'
+                '<li>A pile may also move onto the pile three spaces to its left if the top cards '
+                'match rank or suit.</li>\n'
+                '<li>After moving a pile, close the gap and keep checking for new moves.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>A perfect win leaves one pile. For casual play, try to beat your lowest pile '
+                'count.</p>'},
+ {'name': 'Clock Solitaire',
+  'slug': 'clock-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '5–10 min',
+  'complexity': 'Very Easy',
+  'vibe': 'Simple luck-based clock layout',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Very Easy', 'Quick', 'Luck'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready',
+  'order': 310,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Reveal all cards before the fourth king appears.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 13 piles of 4 cards face down: 12 piles in a clock shape and one center '
+                'pile.</li>\n'
+                '<li>Clock positions match ace through queen. The center pile is kings.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Start by revealing the top card of the center pile.</li>\n'
+                '<li>Move that card face up to its matching pile: ace to 1, 2 to 2, and so on; '
+                'queens to 12, kings to the center.</li>\n'
+                '<li>Then reveal the next face-down card from that destination pile and '
+                'continue.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win if every card is revealed before the fourth king sends you to an empty '
+                'center pile.</p>'},
+ {'name': 'Golf Solitaire',
+  'slug': 'golf-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '5–15 min',
+  'complexity': 'Easy',
+  'vibe': 'Fast one-up/one-down sequencing',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Quick', 'Tableau', 'Easy'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready; no-wrap starter rules',
+  'order': 320,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Clear the tableau by playing cards one rank higher or lower than the waste '
+                'card.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 7 columns of 5 cards face up.</li>\n'
+                '<li>Place the remaining cards as a stock, then flip one card to start the '
+                'waste.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Move any exposed tableau card to the waste if it is one rank higher or lower '
+                'than the current waste card.</li>\n'
+                '<li>Suits do not matter. In the starter version, aces and kings do not '
+                'wrap.</li>\n'
+                '<li>When no tableau card can play, flip one stock card to the waste.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win by clearing all tableau cards before the stock runs out.</p>'},
+ {'name': 'Canfield Solitaire',
+  'slug': 'canfield-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '15–30 min',
+  'complexity': 'Moderate',
+  'vibe': 'Classic reserve-pile solitaire',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Tableau', 'Classic', 'Moderate'],
+  'needs': ['1 standard 52-card deck', 'Table space'],
+  'status': 'Ready; draw-three traditional rules',
+  'order': 330,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Build all foundations upward by suit, wrapping king to ace when needed.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Deal 13 cards face down as the reserve, then turn the top reserve card face '
+                'up.</li>\n'
+                '<li>Deal one card to the first foundation to set the starting rank. Deal 4 '
+                'tableau cards face up.</li>\n'
+                '<li>The rest forms the stock.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Build tableau downward by alternating color, wrapping ace after king if '
+                'needed.</li>\n'
+                '<li>Build foundations upward by suit from the starting rank, wrapping after king '
+                'to ace.</li>\n'
+                '<li>Fill empty tableau spaces immediately from the reserve; if reserve is empty, '
+                'use the waste.</li>\n'
+                '<li>Turn stock cards three at a time to the waste.</li>\n'
+                '</ol>\n'
+                '<h2>Win</h2>\n'
+                '<p>Win by moving all cards to the foundations.</p>'},
+ {'name': 'Bowling Solitaire',
+  'slug': 'bowling-solitaire',
+  'players': '1 player',
+  'player_tags': ['1 Player'],
+  'decks': '1 deck',
+  'optional_deck': 'No',
+  'time': '10–20 min',
+  'complexity': 'Easy',
+  'vibe': 'Ten-pin themed solitaire',
+  'tags': ['Cards', '1 Player', '1 Deck', 'Solitaire', 'Theme', 'Scorecard', 'Easy'],
+  'needs': ['1 standard deck with 10s, face cards, and jokers removed',
+            'Bowling score sheet or paper'],
+  'status': 'Ready; simple bowling-card layout rules',
+  'order': 340,
+  'rules_html': '<h2>Object</h2>\n'
+                '<p>Knock down as many card “pins” as possible over 10 bowling frames.</p>\n'
+                '<h2>Setup</h2>\n'
+                '<ul>\n'
+                '<li>Use ace through 9 only: remove 10s, face cards, and jokers.</li>\n'
+                '<li>Deal 10 pin cards face up in a bowling triangle: 4 back, then 3, then 2, then '
+                '1 front.</li>\n'
+                '<li>Deal 3 ball cards face up.</li>\n'
+                '</ul>\n'
+                '<h2>How to play</h2>\n'
+                '<ol>\n'
+                '<li>Use ball cards to remove exposed pin cards that match the ball value or '
+                'combine to equal the ball value.</li>\n'
+                '<li>Only pins with no pins in front of them are exposed.</li>\n'
+                '<li>Use up to 2 balls for a normal frame. Clear all pins with the first ball for '
+                'a strike; clear remaining pins with the second for a spare.</li>\n'
+                '</ol>\n'
+                '<h2>Win / score</h2>\n'
+                '<p>Score like bowling, or simply total pins knocked down over 10 frames for a '
+                'quick solo challenge.</p>'}]

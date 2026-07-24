@@ -634,6 +634,35 @@ def card_printables():
         ('Setup', ['Each player antes one token and gets one card face down.', 'Hold the card to your forehead without looking. Everyone sees yours except you.']),
         ('Play', ['Bet based on everyone else’s cards and table talk.', 'Remaining players reveal; highest card wins.'])
     ]))
+    paths.append(generic_reference_wrapped('Klondike Solitaire', 'klondike-solitaire-reference.pdf', 'Classic 7-column setup', [
+        ('Setup', ['Deal 7 columns with 1 to 7 cards. Only top cards are face up.', 'Build tableau downward by alternating color. Empty columns need kings.']),
+        ('Goal', ['Build foundations ace to king by suit.', 'Use draw-one for the starter version; draw-three for harder classic play.'])
+    ]))
+    paths.append(generic_reference_wrapped('FreeCell', 'freecell-reference.pdf', 'Open-information solitaire', [
+        ('Setup', ['Deal all cards face up into 8 columns: four columns of 7 and four columns of 6.', 'Leave 4 free cells and 4 foundation spaces.']),
+        ('Play', ['Build tableau downward by alternating color.', 'Use free cells as temporary storage.', 'Move all cards to foundations ace to king by suit.'])
+    ]))
+    paths.append(generic_reference_wrapped('Pyramid Solitaire', 'pyramid-solitaire-reference.pdf', 'Pair exposed cards to 13', [
+        ('Setup', ['Deal a 7-row pyramid of 28 cards. Only uncovered cards are available.', 'Use the rest as the stock.']),
+        ('Play', ['Remove exposed pairs totaling 13. Kings remove alone.', 'A=1, J=11, Q=12, K=13.', 'Win by clearing the pyramid.'])
+    ]))
+    paths.append(generic_reference_wrapped('Accordion Solitaire', 'accordion-solitaire-reference.pdf', 'Compact pile-compressing puzzle', [
+        ('Moves', ['Move a pile onto the pile immediately left if top cards match rank or suit.', 'You may also move onto the pile three spaces left if top cards match rank or suit.']),
+        ('Goal', ['Close gaps after moves.', 'Try to compress the deck into one pile, or beat your lowest pile count.'])
+    ]))
+    paths.append(generic_reference_wrapped('Clock Solitaire', 'clock-solitaire-reference.pdf', '13-pile luck solitaire', [
+        ('Setup', ['Deal 13 piles of 4 cards: 12 clock positions and one king pile in the center.', 'Start by revealing the top center card.']),
+        ('Play', ['Move each revealed card to its rank pile: ace to 1, queen to 12, king to center.', 'Reveal the next card from that pile.', 'Win if all cards reveal before the fourth king stops the game.'])
+    ]))
+    paths.append(generic_reference_wrapped('Golf Solitaire', 'golf-solitaire-reference.pdf', 'One-up / one-down tableau', [
+        ('Setup', ['Deal 7 columns of 5 cards face up.', 'Flip one stock card to start the waste.']),
+        ('Play', ['Move exposed tableau cards one rank higher or lower than the waste.', 'Suits do not matter. Starter version does not wrap ace/king.', 'Win by clearing the tableau before stock runs out.'])
+    ]))
+    paths.append(generic_reference_wrapped('Canfield Solitaire', 'canfield-solitaire-reference.pdf', 'Reserve-pile solitaire', [
+        ('Setup', ['Deal 13 reserve cards, one starting foundation card, and 4 tableau cards.', 'Foundations start at the dealt rank and wrap after king.']),
+        ('Play', ['Build tableau downward by alternating color.', 'Fill empty tableau spaces from the reserve first.', 'Turn stock three at a time.'])
+    ]))
+    paths.append(card_score_sheet('Bowling Solitaire', 'bowling-solitaire-score-sheet.pdf', '10-frame card bowling', ['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','TOTAL'], headers=('Frame','Ball 1','Ball 2','Score'), note_lines=['Use A-9 cards only. Remove exposed pin cards matching or totaling the ball card. Score like bowling or count total pins.']))
     return paths
 
 def main():
@@ -658,6 +687,9 @@ def main():
         ('Turn', ['Roll up to three times, keeping any dice between rolls.', 'Best hand after final roll wins the round.']),
         ('Rankings', ['Five of a kind, four of a kind, full house.', 'Straight, three of a kind, two pair, one pair, high die.'])
     ])]
+    paths += [simple_total('Solo Farkle Challenge','solo-farkle-challenge-sheet.pdf','10-turn score chase','Play normal Farkle for exactly 10 turns. 3000 decent • 5000 strong • 7500 excellent.')]
+    paths += [card_score_sheet('Dice Solitaire', 'dice-solitaire-score-sheet.pdf', 'Five-round solo dice puzzle', ['Ones','Pairs','3 Kind','Straight','Chance','TOTAL'], headers=('Category','Score'), note_lines=['Roll up to three times each round. Use each category once. Straight = 30 for 1-5 or 2-6.'])]
+    paths += [card_score_sheet('Bowling Dice', 'bowling-dice-score-sheet.pdf', '10-frame dice bowling', ['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','TOTAL'], headers=('Frame','Ball 1','Ball 2','Score'), note_lines=['Each die showing 4, 5, or 6 knocks down one pin. Strike if all 10 fall on ball 1; spare if all fall by ball 2.'])]
     print('Generated/copy printables:')
     for p in sorted(OUT.glob('*.pdf')):
         print(p.name, p.stat().st_size)
