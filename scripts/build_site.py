@@ -3,47 +3,14 @@ from __future__ import annotations
 
 import html
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 SOURCE = Path('/mnt/c/Users/code3/OneDrive/Desktop/Atlas_Project_Records/Card-Dice Games/dice_games.md')
 
-GAMES = [
-    dict(name='Farkle', slug='farkle', players='2+ players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Easy', vibe='Push your luck scoring', tags=['Dice','2 Players','3+ Players','Push Your Luck','Easy','Score Chart PDF','Scoresheet PDF'], needs=['6 dice','Pen or pencil','Score sheet'], printables=['Farkle score sheet PDF'], status='Ready; official score sheet added'),
-    dict(name='Liar’s Dice / Perudo', slug='liars-dice', players='3–6 ideal', player_tags=['3+ Players'], dice='5 dice per player', time='15–30 min', complexity='Easy', vibe='Bluffing and table talk', tags=['Dice','3+ Players','Bluffing','Party','Dice Cups','Wild 1s','Drinking Variant','Additional Items Required'], needs=['5 dice per player','Opaque dice cup per player'], printables=['Rules reference'], status='Ready; printable added; elimination and drinking variants'),
-    dict(name='Ship, Captain, and Crew', slug='ship-captain-and-crew', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='5–15 min', complexity='Very Easy', vibe='Quick pub game', tags=['Dice','2 Players','3+ Players','Pub Game','Very Easy','Quick'], needs=['5 dice'], printables=[], status='Ready; printable added'),
-    dict(name='Pig', slug='pig', players='2+ players', player_tags=['2 Players','3+ Players'], dice='1–2 dice', time='5–20 min', complexity='Very Easy', vibe='Simple push your luck', tags=['Dice','2 Players','3+ Players','Push Your Luck','Very Easy','Quick'], needs=['1 die for classic Pig','2 dice for two-dice Pig'], printables=[], status='Ready; printable added'),
-    dict(name='Going to Boston', slug='going-to-boston', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='5–15 min', complexity='Very Easy', vibe='Light family filler', tags=['Dice','2 Players','3+ Players','Family Friendly','Very Easy','Quick'], needs=['3 dice'], printables=[], status='Ready; printable added'),
-    dict(name='Yahtzee / Yacht', slug='yahtzee-yacht', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='20–45 min', complexity='Moderate', vibe='Scorecard combinations', tags=['Dice','2 Players','3+ Players','Scorecard','Moderate','Scoresheet PDF','Additional Items Required'], needs=['5 dice','Pen or pencil','Score sheet'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Mia', slug='mia', players='3+ players', player_tags=['3+ Players'], dice='2 dice', time='5–15 min', complexity='Easy', vibe='Tiny bluffing game', tags=['Dice','3+ Players','Bluffing','Pub Game','Dice Cups','Additional Items Required'], needs=['2 dice','One opaque cup'], printables=['Rules reference'], status='Ready; printable added'),
-    dict(name='Beetle', slug='beetle', players='2+ players', player_tags=['2 Players','3+ Players'], dice='1 die', time='5–15 min', complexity='Very Easy', vibe='Kids drawing game', tags=['Dice','2 Players','3+ Players','Kids','Very Easy','Paper Needed'], needs=['1 die','Paper','Pen or pencil'], printables=['Beetle drawing sheet'], status='Ready; printable added'),
-    dict(name='Tenzi', slug='tenzi', players='2+ players', player_tags=['2 Players','3+ Players'], dice='10 dice per player', time='Under 5 min', complexity='Very Easy', vibe='Speed party chaos', tags=['Dice','2 Players','3+ Players','Speed','Party','Kids','Very Easy'], needs=['10 dice per player'], printables=[], status='Ready; printable added'),
-    dict(name='Bunco', slug='bunco', players='Group game', player_tags=['3+ Players','Teams'], dice='3 dice per table', time='30+ min', complexity='Easy', vibe='Large social group game', tags=['Dice','3+ Players','Teams','Party','Scorecard','Additional Items Required'], needs=['3 dice per table','Score sheets','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Craps', slug='craps', players='1+ players', player_tags=['1 Player','2 Players','3+ Players'], dice='2 dice', time='Variable', complexity='Moderate', vibe='Casino-style pass line', tags=['Dice','1 Player','2 Players','3+ Players','Casino Style','Tokens/Chips','Additional Items Required'], needs=['2 dice','Optional tokens/chips'], printables=['Pass Line rules reference'], status='Ready; printable added'),
-    dict(name='Knucklebones', slug='knucklebones', players='2 players', player_tags=['2 Players'], dice='18 dice ideal', time='5–15 min', complexity='Moderate', vibe='Tactical head-to-head', tags=['Dice','2 Players','Tactical','Printable Board','Additional Items Required'], needs=['18 dice ideal','3x3 grid per player'], printables=['Printable board'], status='Ready; printable added'),
-    dict(name='Can’t Stop', slug='cant-stop', players='2–4 players', player_tags=['2 Players','3+ Players'], dice='4 dice', time='20–40 min', complexity='Moderate', vibe='Push your luck board race', tags=['Dice','2 Players','3+ Players','Push Your Luck','Tactical','Printable Board'], needs=['4 dice','Number track from 2 to 12','Markers'], printables=['Printable board'], status='Ready; printable added'),
-    dict(name='Shut the Box', slug='shut-the-box', players='1+ players', player_tags=['1 Player','2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Easy', vibe='Fast math puzzle', tags=['Dice','1 Player','2 Players','3+ Players','Tactical','Printable Board'], needs=['2 dice','Board or paper numbers 1–9/12'], printables=['Printable board'], status='Ready; printable added'),
-    dict(name='Qwixx-Style Roll-and-Write', slug='qwixx-style-roll-and-write', players='2–5 players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='15–30 min', complexity='Moderate', vibe='Roll-and-write score rows', tags=['Dice','2 Players','3+ Players','Scorecard','Tactical','Scoresheet PDF'], needs=['6 dice','Score sheets','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Martinetti / Mountain / Matterhorn', slug='martinetti-mountain-matterhorn', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='10–20 min', complexity='Easy', vibe='Number-track race', tags=['Dice','2 Players','3+ Players','Tactical','Printable Board'], needs=['3 dice','Paper track','Pen or pencil'], printables=['Printable track'], status='Ready; printable added; track variants included'),
-    dict(name='Chicago', slug='chicago', players='2+ players', player_tags=['2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Very Easy', vibe='Target-number rounds', tags=['Dice','2 Players','3+ Players','Very Easy','Quick','Scorecard'], needs=['2 dice','Optional score sheet'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Threes / Thirty', slug='threes-thirty', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5–6 dice', time='5–15 min', complexity='Easy', vibe='Low-score reroll game', tags=['Dice','2 Players','3+ Players','Easy','Quick','Pub Game'], needs=['5 or 6 dice'], printables=[], status='Ready; printable added'),
-    dict(name='Drop Dead', slug='drop-dead', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='5–15 min', complexity='Very Easy', vibe='Dice survival scoring', tags=['Dice','2 Players','3+ Players','Very Easy','Quick','Family Friendly'], needs=['5 dice','Optional score sheet'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Poker Dice', slug='poker-dice', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='5–15 min', complexity='Easy', vibe='Poker-style dice hands', tags=['Dice','2 Players','3+ Players','Easy','Pub Game','Rules Reference'], needs=['5 dice'], printables=['Hand ranking reference'], status='Ready; printable added'),
-    dict(name='Sevens Out', slug='sevens-out', players='2+ players', player_tags=['2 Players','3+ Players'], dice='2 dice', time='5–15 min', complexity='Very Easy', vibe='Two-dice push your luck', tags=['Dice','2 Players','3+ Players','Push Your Luck','Very Easy','Quick'], needs=['2 dice','Optional score sheet'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Beat That', slug='beat-that', players='2+ players', player_tags=['2 Players','3+ Players'], dice='2–4 dice', time='5–10 min', complexity='Very Easy', vibe='Make the biggest number', tags=['Dice','2 Players','3+ Players','Kids','Very Easy','Quick'], needs=['2–4 dice'], printables=[], status='Ready; printable added'),
-    dict(name='Skunk', slug='skunk', players='3+ ideal; 2 works', player_tags=['2 Players','3+ Players'], dice='2 dice', time='10–20 min', complexity='Easy', vibe='Group push your luck', tags=['Dice','2 Players','3+ Players','Push Your Luck','Family Friendly','Scoresheet PDF'], needs=['2 dice','Score sheet','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Midnight', slug='midnight', players='2+ players', player_tags=['2 Players','3+ Players'], dice='6 dice', time='5–15 min', complexity='Easy', vibe='Quick pub game', tags=['Dice','2 Players','3+ Players','Pub Game','Quick','Easy'], needs=['6 dice','Optional score sheet'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Stuck in the Mud', slug='stuck-in-the-mud', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='5–15 min', complexity='Very Easy', vibe='Simple family scoring', tags=['Dice','2 Players','3+ Players','Family Friendly','Very Easy','Scoresheet PDF'], needs=['5 dice','Score sheet','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Three or More', slug='three-or-more', players='2+ players', player_tags=['2 Players','3+ Players'], dice='5 dice', time='10–20 min', complexity='Easy', vibe='Yahtzee-lite sets', tags=['Dice','2 Players','3+ Players','Scorecard','Easy','Scoresheet PDF'], needs=['5 dice','Score sheet','Pen or pencil'], printables=['Scoresheet PDF'], status='Ready; printable added'),
-    dict(name='Crag', slug='crag', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='10–20 min', complexity='Moderate', vibe='Compact scorecard game', tags=['Dice','2 Players','3+ Players','Scorecard','Tactical','Scoresheet PDF'], needs=['3 dice','Scorecard','Pen or pencil'], printables=['Scorecard PDF'], status='Ready; printable added'),
-    dict(name='Aces in the Pot', slug='aces-in-the-pot', players='3+ players', player_tags=['3+ Players'], dice='2 dice', time='5–15 min', complexity='Very Easy', vibe='Token passing filler', tags=['Dice','3+ Players','Token Passing','Tokens/Chips','Additional Items Required','Very Easy'], needs=['2 dice','Tokens/chips/coins'], printables=['Rules reference'], status='Ready; printable added'),
-    dict(name='Cee-lo / 4-5-6', slug='cee-lo-456', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='5–15 min', complexity='Easy', vibe='Dramatic ranking rounds', tags=['Dice','2 Players','3+ Players','Pub Game','Rules Reference'], needs=['3 dice','Optional tokens/chips'], printables=['Ranking reference'], status='Ready; printable added'),
-    dict(name='Left Center Right, Standard-Dice Version', slug='left-center-right', players='3+ players', player_tags=['3+ Players'], dice='3 dice', time='5–15 min', complexity='Very Easy', vibe='Party token passing', tags=['Dice','3+ Players','Token Passing','Tokens/Chips','Additional Items Required','Very Easy'], needs=['3 dice','Tokens/chips/coins'], printables=['Rules reference'], status='Ready; printable added'),
-    dict(name='Dice Golf', slug='dice-golf', players='2+ players', player_tags=['2 Players','3+ Players'], dice='Usually 5 dice', time='15–30 min', complexity='Moderate', vibe='Themed score-sheet play', tags=['Dice','2 Players','3+ Players','Scorecard','Scoresheet PDF'], needs=['5 dice','Score sheet','Pen or pencil'], printables=['Scorecard PDF'], status='Ready; printable added'),
-    dict(name='Sic Bo, Simplified Home Version', slug='sic-bo', players='2+ players', player_tags=['2 Players','3+ Players'], dice='3 dice', time='Flexible', complexity='Moderate', vibe='Casino-style fake-chip play', tags=['Dice','2 Players','3+ Players','Casino Style','Tokens/Chips','Betting Mat','Additional Items Required'], needs=['3 dice','Fake chips/tokens','Betting mat/reference'], printables=['Betting mat PDF'], status='Ready; printable added'),
-    dict(name='Help Your Neighbor', slug='help-your-neighbor', players='3–6 ideal', player_tags=['3+ Players'], dice='Usually 3 dice', time='10–20 min', complexity='Easy', vibe='Light social token play', tags=['Dice','3+ Players','Token Passing','Tokens/Chips','Additional Items Required'], needs=['3 dice','Tokens/chips/coins'], printables=['Rules reference'], status='Ready; printable added'),
-]
-
+from data.game_data import CARD_GAMES, GAMES
 DIFFICULTY_ORDER = {
     'Very Easy': 0,
     'Easy': 1,
@@ -225,6 +192,7 @@ def layout(title: str, body: str, depth: int = 0, description: str = 'Portable d
 
 PRINTABLE_LINKS = {
     'farkle': [('Farkle score sheet', 'farkle-score-sheet.pdf')],
+    'pair-pressure': [('Pair Pressure board / score sheet', 'pair-pressure-board-score-sheet.pdf')],
     'liars-dice': [('Liar’s Dice quick reference', 'liars-dice-reference.pdf')],
     'ship-captain-and-crew': [('Ship, Captain, and Crew quick reference', 'ship-captain-and-crew-reference.pdf')],
     'pig': [('Pig quick reference', 'pig-reference.pdf')],
@@ -257,6 +225,23 @@ PRINTABLE_LINKS = {
     'sic-bo': [('Sic Bo betting mat', 'sic-bo-betting-mat.pdf')],
     'left-center-right': [('Left Center Right quick reference', 'left-center-right-reference.pdf')],
     'help-your-neighbor': [('Help Your Neighbor quick reference', 'help-your-neighbor-reference.pdf')],
+    'crazy-eights': [('Crazy Eights quick reference', 'crazy-eights-reference.pdf')],
+    'spoons': [('Spoons quick reference', 'spoons-reference.pdf')],
+    'speed': [('Speed setup reference', 'speed-reference.pdf')],
+    'spit': [('Spit setup reference', 'spit-reference.pdf')],
+    'shithead-palace-karma': [('Shithead variant worksheet', 'shithead-variant-worksheet.pdf')],
+    'bs-cheat': [('BS / Cheat quick reference', 'bs-cheat-reference.pdf')],
+    'president': [('President quick reference', 'president-reference.pdf')],
+    'golf-card-game': [('Golf score sheet', 'golf-card-game-score-sheet.pdf')],
+    'rummy': [('Rummy score sheet', 'rummy-score-sheet.pdf')],
+    'gin-rummy': [('Gin Rummy score sheet', 'gin-rummy-score-sheet.pdf')],
+    'canasta': [('Canasta score sheet', 'canasta-score-sheet.pdf')],
+    'kemps': [('Kemps quick reference', 'kemps-reference.pdf')],
+    'hearts': [('Hearts score sheet', 'hearts-score-sheet.pdf')],
+    'spades': [('Spades score sheet', 'spades-score-sheet.pdf')],
+    'egyptian-rat-screw': [('Egyptian Rat Screw quick reference', 'egyptian-rat-screw-reference.pdf')],
+    'spider-solitaire': [('Spider Solitaire setup reference', 'spider-solitaire-reference.pdf')],
+
 }
 
 
@@ -318,12 +303,30 @@ def build_home() -> None:
 
 <section class="panel">
   <h2>Start here</h2>
-  <p>The dice section now has structured game cards and individual rule pages. Variant-heavy games are marked so the house rules can be locked before final printables are made.</p>
+  <p>The dice section has structured game cards and individual rule pages. The card section now follows the same template, including deck counts and optional extra-deck notes.</p>
   <div class="mini-link-row">
     <a href="dice/">Browse dice games</a>
+    <a href="cards/">Browse card games</a>
     <a href="players/2-players/">Find 2-player games</a>
     <a href="players/3-plus/">Find group games</a>
     <a href="printables/">Download printables</a>
+  </div>
+</section>
+
+<section class="panel two-column">
+  <div>
+    <h2>Grab-and-go kit</h2>
+    <ul>
+      <li>6 standard dice</li>
+      <li>1 standard 52-card deck</li>
+      <li>Optional second 52-card deck for larger card games and Spider Solitaire</li>
+      <li>Pencil plus printed score sheets or scrap paper</li>
+      <li>Small tokens, candy, coins, or chips for betting/token games</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Collection boundaries</h2>
+    <p>The current card library focuses on games that work with ordinary playing cards. Specialty-deck games like Uno, Phase 10, or Skip-Bo can wait. Poker variants still fit the portable-kit idea because any small items can stand in as chips.</p>
   </div>
 </section>'''
     write(ROOT / 'index.html', layout('Home', body, 0, 'Portable dice and card game rules for travel and game nights.'))
@@ -399,17 +402,166 @@ def build_game_pages(sections: dict[str, str]) -> None:
         write(ROOT / f'dice/{g["slug"]}/index.html', layout(g['name'], body, 2, f'Rules and quick reference for {g["name"]}.'))
 
 
+
+def sorted_card_games(games: list[dict] | None = None) -> list[dict]:
+    """Sort card games by deliberate index order, with Rummy/Gin/Canasta kept together."""
+    return sorted(games or CARD_GAMES, key=lambda g: (g.get('order', 999), g['name'].lower()))
+
+
+def card_game_card(g: dict, depth: int = 0) -> str:
+    prefix = rel_prefix(depth)
+    top_tags = display_tags(g)[:5]
+    return f'''<article class="game-card">
+  <div class="card-topline"><span>{html.escape(g['time'])}</span><span>{html.escape(g['complexity'])}</span></div>
+  <h2><a href="{prefix}cards/{g['slug']}/">{html.escape(g['name'])}</a></h2>
+  <p>{html.escape(g['vibe'])}</p>
+  <dl class="quick-dl"><div><dt>Players</dt><dd>{html.escape(g['players'])}</dd></div><div><dt>Decks</dt><dd>{html.escape(g['decks'])}</dd></div></dl>
+  {tag_list(top_tags)}
+  <p class="status"><strong>Optional deck:</strong> {html.escape(g['optional_deck'])}</p>
+</article>'''
+
+
+def card_deck_bucket(g: dict) -> str:
+    decks = g['decks'].lower()
+    if decks.startswith('1'):
+        return '1 Deck'
+    if decks.startswith('2'):
+        return '2 Decks'
+    return '3+ Decks'
+
+
+def deck_filter_section(label: str, games: list[dict], depth: int = 1) -> str:
+    cards = '\n'.join(card_game_card(g, depth=depth) for g in games)
+    slug = label.lower().replace('+', 'plus').replace(' ', '-')
+    return f'''<section id="{slug}">
+  <h2>{html.escape(label)}</h2>
+  <div class="game-grid" aria-label="{html.escape(label)} card games">
+{cards}
+  </div>
+</section>'''
+
+
+def build_cards_index() -> None:
+    games = sorted_card_games()
+    cards = '\n'.join(card_game_card(g, depth=1) for g in games)
+    optional_count = sum(g['optional_deck'] != 'No' and not g['optional_deck'].startswith('No;') for g in CARD_GAMES)
+    one_deck_games = [g for g in games if card_deck_bucket(g) == '1 Deck']
+    two_deck_games = [g for g in games if card_deck_bucket(g) == '2 Decks']
+    three_plus_deck_games = [g for g in games if card_deck_bucket(g) == '3+ Decks']
+    deck_sections = '\n'.join([
+        deck_filter_section('1 Deck', one_deck_games),
+        deck_filter_section('2 Decks', two_deck_games),
+        deck_filter_section('3+ Decks', three_plus_deck_games),
+    ])
+    body = f'''<p class="breadcrumb"><a href="../">← Home</a></p>
+<header class="hero compact-hero">
+  <p class="eyebrow">Standard deck card games</p>
+  <h1>Card Games</h1>
+  <p>Browse card games by player count, deck count, complexity, and table style. This section is intentionally focused on ordinary playing cards instead of specialty decks.</p>
+</header>
+
+<section class="panel stat-panel">
+  <h2>Card game library status</h2>
+  <ul class="status-list">
+    <li><strong>{len(CARD_GAMES)}</strong> card games listed</li>
+    <li><strong>{len(one_deck_games)}</strong> use 1 deck</li>
+    <li><strong>{len(two_deck_games)}</strong> use 2 decks</li>
+    <li><strong>{len(three_plus_deck_games)}</strong> use 3+ decks</li>
+    <li><strong>{optional_count}</strong> can benefit from an optional additional deck</li>
+  </ul>
+  <div class="mini-link-row">
+    <a href="#1-deck">1 deck</a>
+    <a href="#2-decks">2 decks</a>
+    <a href="#3plus-decks">3+ decks</a>
+  </div>
+</section>
+
+<section class="panel two-column">
+  <div>
+    <h2>Index notes</h2>
+    <p>Rummy, Gin Rummy, and Canasta are grouped together because they share the same meld-building family. Deck counts are shown on every card so it is easy to pack the right kit before leaving the house.</p>
+  </div>
+  <div>
+    <h2>Future additions</h2>
+    <p>Hold specialty-deck games for later. Poker variants are a good future category because they still only need a standard deck, and betting can use candy, coins, chips, or any harmless table tokens.</p>
+  </div>
+</section>
+
+<section>
+  <h2>All card games</h2>
+  <div class="game-grid" aria-label="Card game list">
+{cards}
+  </div>
+</section>
+
+{deck_sections}'''
+    write(ROOT / 'cards/index.html', layout('Card Games', body, 1, 'Card game rules for Portable Game Night.'))
+
+
+def build_card_game_pages() -> None:
+    for g in CARD_GAMES:
+        needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
+        body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Card Games</a></p>
+<article class="game-page">
+  <header class="hero compact-hero game-hero">
+    <p class="eyebrow">Card game</p>
+    <h1>{html.escape(g['name'])}</h1>
+    <p>{html.escape(g['vibe'])}</p>
+    {tag_list(display_tags(g))}
+  </header>
+
+  <section class="quick-facts panel">
+    <h2>Quick facts</h2>
+    <dl class="facts-grid">
+      <div><dt>Players</dt><dd>{html.escape(g['players'])}</dd></div>
+      <div><dt>Decks needed</dt><dd>{html.escape(g['decks'])}</dd></div>
+      <div><dt>Optional extra deck</dt><dd>{html.escape(g['optional_deck'])}</dd></div>
+      <div><dt>Typical length</dt><dd>{html.escape(g['time'])}</dd></div>
+      <div><dt>Complexity</dt><dd>{html.escape(g['complexity'])}</dd></div>
+      <div><dt>Status</dt><dd>{html.escape(g['status'])}</dd></div>
+    </dl>
+  </section>
+
+  <section class="panel two-column">
+    <div>
+      <h2>Kit needed</h2>
+      <ul>{needs_items}</ul>
+    </div>
+    <div>
+      <h2>Printable downloads</h2>
+      <ul>{printable_items(g, depth=2)}</ul>
+    </div>
+  </section>
+
+  <section class="rules panel">
+    <h2>Rules</h2>
+    {g['rules_html']}
+  </section>
+</article>'''
+        write(ROOT / f'cards/{g["slug"]}/index.html', layout(g['name'], body, 2, f'Rules and quick reference for {g["name"]}.'))
+
 def build_player_page(slug: str, title: str, tag: str) -> None:
-    chosen = sorted_games([g for g in GAMES if tag in g['player_tags']])
-    cards = '\n'.join(game_card(g, depth=2) for g in chosen)
+    chosen_dice = sorted_games([g for g in GAMES if tag in g['player_tags']])
+    chosen_cards = sorted_card_games([g for g in CARD_GAMES if tag in g['player_tags']])
+    dice_cards = '\n'.join(game_card(g, depth=2) for g in chosen_dice)
+    card_cards = '\n'.join(card_game_card(g, depth=2) for g in chosen_cards)
     body = f'''<p class="breadcrumb"><a href="../../">← Home</a></p>
 <header class="hero compact-hero">
   <p class="eyebrow">Browse by player count</p>
   <h1>{html.escape(title)}</h1>
-  <p>Dice games that fit this player count, ordered easiest to hardest. Card games can be added here later using the same structure.</p>
+  <p>Dice and card games that fit this player count. Dice games are ordered easiest to hardest; card games follow the card-game index order.</p>
 </header>
-<section class="game-grid" aria-label="{html.escape(title)}">
-{cards}
+<section>
+  <h2>Dice games</h2>
+  <div class="game-grid" aria-label="{html.escape(title)} dice games">
+{dice_cards}
+  </div>
+</section>
+<section>
+  <h2>Card games</h2>
+  <div class="game-grid" aria-label="{html.escape(title)} card games">
+{card_cards}
+  </div>
 </section>'''
     write(ROOT / f'players/{slug}/index.html', layout(title, body, 2, f'{title} for Portable Game Night.'))
 
@@ -435,8 +587,9 @@ def main() -> None:
     build_player_page('1-player', '1 Player Games', '1 Player')
     build_player_page('2-players', '2 Player Games', '2 Players')
     build_player_page('3-plus', '3+ Player Games', '3+ Players')
-    build_cards_placeholder()
-    print(f'Built {len(GAMES)} dice game pages plus index/player pages.')
+    build_cards_index()
+    build_card_game_pages()
+    print(f'Built {len(GAMES)} dice game pages and {len(CARD_GAMES)} card game pages plus index/player pages.')
 
 
 if __name__ == '__main__':

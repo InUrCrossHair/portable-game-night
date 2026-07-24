@@ -136,6 +136,45 @@ def player_round_sheet(title, filename, subtitle, rounds=10, player_cols=4, bott
     return save_pdf(img, filename)
 
 
+
+def pair_pressure_board():
+    img, d = base('Pair Pressure', '6-dice board race to 500')
+    scores = {2:50, 3:25, 4:17, 5:13, 6:10, 7:5, 8:10, 9:13, 10:17, 11:25, 12:50}
+    # Board layout mirrors the app-like 4 / 3 / 4 arrangement while staying printer-friendly.
+    layout_rows = [[2, 3, 4, 5], [6, 7, 8], [9, 10, 11, 12]]
+    y = 350
+    card_w, card_h = 455, 430
+    gap = 40
+    for row in layout_rows:
+        row_w = len(row) * card_w + (len(row)-1) * gap
+        x = (W - row_w) // 2
+        for n in row:
+            d.rounded_rectangle([x, y, x+card_w, y+card_h], radius=35, outline=BLACK, width=8, fill=LIGHT)
+            centered(d, (x, y+25, x+card_w, y+250), str(n), font(132, True))
+            d.rounded_rectangle([x+42, y+295, x+card_w-42, y+380], radius=24, outline=BLACK, width=5, fill=WHITE)
+            centered(d, (x+42, y+295, x+card_w-42, y+380), f'{scores[n]} points', F_SMALL_B)
+            d.text((x+44, y+388), 'chip / mark when cleared', font=F_TINY, fill=BLACK)
+            x += card_w + gap
+        y += card_h + 45
+    # Turn/score tracker at bottom.
+    box_y = 2025
+    d.rounded_rectangle([M, box_y, W-M, box_y+360], radius=28, outline=BLACK, width=8, fill=WHITE)
+    d.text((M+55, box_y+42), 'Turn score', font=F_H2, fill=BLACK)
+    for i in range(6):
+        x = M + 430 + i*260
+        d.rectangle([x, box_y+35, x+180, box_y+135], outline=BLACK, width=5, fill=WHITE)
+    d.text((M+55, box_y+180), 'Banked score', font=F_H2, fill=BLACK)
+    for label, x in [('You', M+500), ('Opponent', M+1180)]:
+        d.text((x, box_y+185), label, font=F_SMALL_B, fill=BLACK)
+        d.rectangle([x, box_y+240, x+420, box_y+325], outline=BLACK, width=5, fill=WHITE)
+    notes(d, M, 2460, [
+        'Rules: pair unused dice to clear open totals. Each die is used once until you roll again.',
+        'Use all 6 dice successfully: reroll all 6. Roll with leftovers: reroll only unused dice.',
+        'Bust: if a roll cannot clear any open number, lose unbanked turn points.',
+        'Board clear bonus: +100 if you clear 2 through 12 in one turn. First to 500 wins.'
+    ])
+    return save_pdf(img, 'pair-pressure-board-score-sheet.pdf')
+
 def skunk():
     img,d=base('Skunk', 'S-K-U-N-K score sheet')
     y=380; rows=['S','K','U','N','K','TOTAL']
@@ -461,14 +500,123 @@ def remaining_quick_refs():
     ]
 
 
+
+def wrapped_text(draw, text, max_width, fnt):
+    words = text.split()
+    lines = []
+    current = ''
+    for word in words:
+        candidate = word if not current else current + ' ' + word
+        if draw.textbbox((0, 0), candidate, font=fnt)[2] <= max_width:
+            current = candidate
+        else:
+            if current:
+                lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    return lines
+
+
+def generic_reference_wrapped(title, filename, subtitle, sections):
+    """Create a readable card/dice quick-reference sheet with wrapped bullets."""
+    img, d = base(title, subtitle)
+    y = 360
+    d.rounded_rectangle([M, y, W-M, H-M], radius=28, outline=BLACK, width=8, fill=WHITE)
+    yy = y + 60
+    for heading, bullets in sections:
+        d.text((M+70, yy), heading, font=F_H2, fill=BLACK)
+        yy += 82
+        for bullet in bullets:
+            lines = wrapped_text(d, bullet, W - 2*M - 210, F_SMALL)
+            d.text((M+95, yy), '•', font=F_SMALL_B, fill=BLACK)
+            for line in lines:
+                d.text((M+135, yy), line, font=F_SMALL, fill=BLACK)
+                yy += 52
+            yy += 22
+        yy += 20
+        if yy > H - 360:
+            d.text((M+70, H-250), 'See full website page for complete rules and variants.', font=F_SMALL_B, fill=BLACK)
+            break
+    return save_pdf(img, filename)
+
+
+def card_score_sheet(title, filename, subtitle, rows, headers=('Hand','P1','P2','P3','P4'), note_lines=None):
+    img, d = base(title, subtitle)
+    y = 350
+    col_count = len(headers) - 1
+    cols = [360] + [(W - 2*M - 360)//col_count] * col_count
+    row_h = min(145, max(100, (H - 850)//(len(rows)+1)))
+    end = draw_table(d, M, y, cols, row_h, list(headers), len(rows))
+    label_rows(d, M, y, row_h, rows, F_SMALL_B if row_h < 130 else F_BODY_B)
+    if note_lines:
+        yy = end + 40
+        for line in note_lines:
+            for wrapped in wrapped_text(d, line, W - 2*M, F_SMALL):
+                d.text((M, yy), wrapped, font=F_SMALL, fill=BLACK)
+                yy += 50
+    return save_pdf(img, filename)
+
+
+def card_printables():
+    paths = []
+    paths.append(generic_reference_wrapped('Crazy Eights', 'crazy-eights-reference.pdf', '1-deck shedding quick reference', [
+        ('Turn', ['Play a card matching rank or suit, or play an 8 as wild.', 'When you play an 8, name the next suit.', 'If you cannot play, draw one card.']),
+        ('Win / score', ['First player out wins the hand.', 'Optional scoring: eights 50, face cards 10, number cards face value.'])
+    ]))
+    paths.append(generic_reference_wrapped('Spoons', 'spoons-reference.pdf', 'Fast reaction party game', [
+        ('Setup', ['Use one standard deck and one fewer spoon/token than the number of players.', 'Deal 4 cards to each player.']),
+        ('Play', ['Draw and pass one card left continuously.', 'When you collect four of a kind, grab a spoon. Once one spoon is taken, anyone may grab one.', 'The player without a spoon gets a letter or is eliminated.'])
+    ]))
+    paths.append(generic_reference_wrapped('Speed', 'speed-reference.pdf', 'Two-player setup and rules', [
+        ('Setup', ['Each player gets a 5-card hand and 15-card stock pile.', 'Place two center piles face down and two 5-card side piles.']),
+        ('Play', ['Flip the two center cards. Both players play at the same time.', 'Play one rank higher or lower. Suits do not matter.', 'Refill your hand to 5 from your stock pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('Spit', 'spit-reference.pdf', 'Two-player tableau setup', [
+        ('Setup', ['Split the deck evenly.', 'Each player builds five piles with 1, 2, 3, 4, and 5 cards. Top cards are face up.']),
+        ('Play', ['Both players spit one card to the center.', 'Play tableau cards one rank higher or lower onto either center pile.', 'When one player clears their tableau, slap the smaller center pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('Shithead', 'shithead-variant-worksheet.pdf', 'Variant worksheet before locking house rules', [
+        ('Current starter version', ['3 face-down table cards, 3 face-up table cards, and a 3-card hand.', 'Play equal or higher. If you cannot play, pick up the pile.', '2 resets, 10 burns, 7 forces next card to be 7 or lower.']),
+        ('Decide later', ['Confirm special cards.', 'Confirm whether multiple same-rank cards can be played together.', 'Confirm whether four of a kind burns the pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('BS / Cheat', 'bs-cheat-reference.pdf', 'Bluffing discard quick reference', [
+        ('Turn', ['Play one or more cards face down and announce the required rank.', 'You may tell the truth or bluff.']),
+        ('Challenge', ['Any player may call BS/Cheat.', 'If the player lied, they take the pile. If they told the truth, the caller takes the pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('President', 'president-reference.pdf', 'Portable house version', [
+        ('Base rules', ['3 is low, ace is high, 2 is highest.', 'Legal plays: singles, pairs, and triples only.', 'Match the number of cards played and beat the rank, or pass.']),
+        ('Ranks', ['First player out is President next hand. Last player out is lowest rank.', 'Lowest-ranked player gives best card to President; President gives any one card back.'])
+    ]))
+    paths.append(card_score_sheet('Card Golf', 'golf-card-game-score-sheet.pdf', 'Low score wins', ['R1','R2','R3','R4','R5','R6','R7','R8','R9','TOTAL'], note_lines=['Starter scoring: A=1, numbers=face value, J/Q=10, K=0. Matching cards in a column cancel to 0.']))
+    paths.append(card_score_sheet('Rummy', 'rummy-score-sheet.pdf', 'Basic Rummy score sheet', ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','TOTAL'], note_lines=['Cards left in hand: A=1, numbers=face value, face cards=10. Lowest total after agreed hands wins.']))
+    paths.append(card_score_sheet('Gin Rummy', 'gin-rummy-score-sheet.pdf', 'Two-player scoring', ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','TOTAL'], headers=('Hand','P1','P2'), note_lines=['Deadwood values: A=1, numbers=face value, face cards=10. Add gin/undercut bonuses if your table uses them.']))
+    paths.append(card_score_sheet('Canasta', 'canasta-score-sheet.pdf', 'Team score sheet', ['R1','R2','R3','R4','R5','R6','TOTAL'], headers=('Round','Team 1','Team 2'), note_lines=['Track meld points, canasta bonuses, red threes, and penalties. First team to the agreed target wins.']))
+    paths.append(generic_reference_wrapped('Kemps', 'kemps-reference.pdf', 'Secret-signal team game', [
+        ('Setup', ['Partners sit across from each other and agree on a secret signal.', 'Deal 4 cards each and place 4 face up in the center.']),
+        ('Calls', ['Partner calls Kemps when they spot your signal.', 'Opponents may call Counter-Kemps if they catch the signal first.'])
+    ]))
+    paths.append(card_score_sheet('Hearts', 'hearts-score-sheet.pdf', 'Avoid points; lowest wins', ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','TOTAL'], note_lines=['Each heart = 1. Queen of spades = 13. Shoot the moon: shooter scores 0, others score 26. Game ends at 100.']))
+    paths.append(card_score_sheet('Spades', 'spades-score-sheet.pdf', 'Partnership bid tracker', ['R1','R2','R3','R4','R5','R6','R7','R8','R9','R10','TOTAL'], headers=('Round','Team 1 Bid','Team 1 Score','Team 2 Bid','Team 2 Score'), note_lines=['Made bid: 10 points per bid trick plus 1 per extra trick. Missed bid: minus 10 per bid trick. 10 bags = -100.']))
+    paths.append(generic_reference_wrapped('Egyptian Rat Screw', 'egyptian-rat-screw-reference.pdf', 'Doubles and sandwiches house version', [
+        ('Face-card challenge', ['Jack = 1 chance, Queen = 2, King = 3, Ace = 4.', 'If the challenged player fails, the previous face-card player takes the pile.']),
+        ('Legal slaps', ['Doubles: two cards of the same rank in a row.', 'Sandwiches: same rank with one card between them.', 'False slap costs one card under the pile.'])
+    ]))
+    paths.append(generic_reference_wrapped('Spider Solitaire', 'spider-solitaire-reference.pdf', '2-deck tableau setup', [
+        ('Setup', ['Use two decks. Deal 10 columns: first 4 columns get 6 cards, remaining 6 get 5 cards.', 'Only top cards are face up.']),
+        ('Goal', ['Build same-suit descending sequences from king to ace.', 'Remove all 8 completed sequences to win.', 'One suit is easiest, two suits is medium, four suits is full difficulty.'])
+    ]))
+    return paths
+
 def main():
     if SRC_FARKLE.exists():
         copyfile(SRC_FARKLE, OUT/'farkle-score-sheet.pdf')
     paths=[]
-    paths += [skunk(), three_or_more(), crag(), dice_golf(), chicago(), bunco(), liars_ref(), ceelo_ref(), sic_bo()]
+    paths += [pair_pressure_board(), skunk(), three_or_more(), crag(), dice_golf(), chicago(), bunco(), liars_ref(), ceelo_ref(), sic_bo()]
     paths += [shut_the_box_board(), knucklebones_board(), cant_stop_board(), qwixx_sheet(), martinetti_track()]
     paths += [yahtzee_yacht_score_sheet(), beetle_sheet(), poker_dice_ref()]
     paths += remaining_quick_refs()
+    paths += card_printables()
     paths += [simple_total('Stuck in the Mud','stuck-in-the-mud-score-sheet.pdf','50 short • 100 normal • 200 long','2s and 5s are stuck. Score live dice until all dice are stuck.')]
     paths += [simple_total('Midnight','midnight-score-sheet.pdf','1 and 4 required','Score the four non-required dice. No 1 and 4 = 0 for the round.')]
     paths += [simple_total('Drop Dead','drop-dead-score-sheet.pdf','5-dice survival scoring','2s and 5s are dead. Score live dice until all dice are dead.')]
