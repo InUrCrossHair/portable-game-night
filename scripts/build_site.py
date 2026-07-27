@@ -301,6 +301,37 @@ def printable_items(g: dict, depth: int) -> str:
     return '<li>No printable needed or currently planned.</li>'
 
 
+def printable_preview_section(g: dict, depth: int) -> str:
+    """Embed web-friendly preview images of any printable aids linked to this game."""
+    links = PRINTABLE_LINKS.get(g['slug'], [])
+    if not links:
+        return ''
+    prefix = rel_prefix(depth)
+    cards = []
+    for label, filename in links:
+        preview_name = Path(filename).with_suffix('.webp').name
+        preview_path = ROOT / 'printables' / 'previews' / preview_name
+        if not preview_path.exists():
+            continue
+        safe_label = html.escape(label)
+        cards.append(f'''<figure class="printable-preview-card">
+      <a href="{prefix}printables/{filename}">
+        <img src="{prefix}printables/previews/{preview_name}" alt="{safe_label} preview" loading="lazy">
+      </a>
+      <figcaption><a class="download-link" href="{prefix}printables/{filename}">Open printable PDF</a></figcaption>
+    </figure>''')
+    if not cards:
+        return ''
+    return f'''<section class="panel printable-preview-section">
+    <h2>Visual play aid</h2>
+    <p class="preview-note">Use this on a phone during play so everyone can see the score chart, board, or reference without passing paper around. Keep 1–2 printed copies as a no-Wi-Fi backup.</p>
+    <div class="printable-preview-grid">
+    {''.join(cards)}
+    </div>
+  </section>
+'''
+
+
 def tag_list(tags: list[str]) -> str:
     return '<div class="tags">' + ''.join(f'<span class="tag">{html.escape(t)}</span>' for t in tags) + '</div>'
 
@@ -399,6 +430,7 @@ def build_game_pages(sections: dict[str, str]) -> None:
         rules = strip_source_quick_facts(sections.get(g['slug'], ''))
         rules_html = g.get('rules_html') or (md_to_html(rules) if rules else '<p>Rules content still needs to be imported.</p>')
         printable_downloads = printable_items(g, depth=2)
+        printable_previews = printable_preview_section(g, depth=2)
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
         body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Dice Games</a></p>
 <article class="game-page">
@@ -430,6 +462,8 @@ def build_game_pages(sections: dict[str, str]) -> None:
       <ul>{printable_downloads}</ul>
     </div>
   </section>
+
+  {printable_previews}
 
   <section class="rules panel">
     <h2>Rules</h2>
@@ -538,6 +572,7 @@ def build_cards_index() -> None:
 def build_card_game_pages() -> None:
     for g in CARD_GAMES:
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
+        printable_previews = printable_preview_section(g, depth=2)
         body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Card Games</a></p>
 <article class="game-page">
   <header class="hero compact-hero game-hero">
@@ -569,6 +604,8 @@ def build_card_game_pages() -> None:
       <ul>{printable_items(g, depth=2)}</ul>
     </div>
   </section>
+
+  {printable_previews}
 
   <section class="rules panel">
     <h2>Rules</h2>

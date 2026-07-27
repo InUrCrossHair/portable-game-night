@@ -229,6 +229,46 @@ dd { margin: 2px 0 0; font-weight: 700; }
   border-top: 1px solid var(--line);
 }
 
+.printable-preview-section {
+  overflow: hidden;
+}
+
+.preview-note {
+  color: var(--muted);
+  margin-top: -4px;
+}
+
+.printable-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.printable-preview-card {
+  margin: 0;
+}
+
+.printable-preview-card > a {
+  display: block;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(68, 45, 25, 0.08);
+}
+
+.printable-preview-card img {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.printable-preview-card figcaption {
+  margin-top: 10px;
+}
+
 pre {
   overflow-x: auto;
   padding: 14px;
