@@ -60,21 +60,22 @@ def centered(draw, box, text, fnt, fill=BLACK):
 def header(draw, title, subtitle=None):
     # Corner dice keep the Cody/Farkle style without colliding with long titles.
     die = 96
-    draw_die(draw, M+20, 52, die, 5)
-    draw_die(draw, M+130, 96, die, 2)
-    draw_die(draw, W-M-226, 96, die, 5)
-    draw_die(draw, W-M-116, 52, die, 6)
+    # Keep all decoration inside a conservative print-safe top margin.
+    draw_die(draw, M+20, 86, die, 5)
+    draw_die(draw, M+130, 130, die, 2)
+    draw_die(draw, W-M-226, 130, die, 5)
+    draw_die(draw, W-M-116, 86, die, 6)
 
     title_font = F_TITLE
     max_title_w = W - 2*M - 560
     while draw.textbbox((0, 0), title, font=title_font)[2] > max_title_w and title_font.size > 92:
         title_font = font(title_font.size - 8, True)
-    centered(draw, (M+270, 58, W-M-270, 220), title, title_font)
+    centered(draw, (M+270, 82, W-M-270, 244), title, title_font)
     if subtitle:
         sub_font = F_SMALL
         while draw.textbbox((0, 0), subtitle, font=sub_font)[2] > W - 2*M - 120 and sub_font.size > 28:
             sub_font = font(sub_font.size - 2)
-        centered(draw, (M, 214, W-M, 276), subtitle, sub_font)
+        centered(draw, (M, 250, W-M, 312), subtitle, sub_font)
 
 
 def draw_table(draw, x, y, col_widths, row_h, headers, rows, shaded=True):
@@ -103,11 +104,14 @@ def label_rows(draw, x, y, row_h, labels, fnt=F_H2):
         centered(draw, (x, y+row_h*(i+1), x+260, y+row_h*(i+2)), str(lab), fnt)
 
 
-def notes(draw, x, y, lines, size='small'):
+def notes(draw, x, y, lines, size='small', max_width=None):
     f = F_SMALL if size == 'small' else F_BODY
+    max_width = max_width or (W - x - M)
     for line in lines:
-        draw.text((x, y), line, font=f, fill=BLACK)
-        y += f.size + 22
+        for wrapped in wrapped_text(draw, line, max_width, f):
+            draw.text((x, y), wrapped, font=f, fill=BLACK)
+            y += f.size + 12
+        y += 10
     return y
 
 
@@ -401,8 +405,11 @@ def generic_reference(title, filename, subtitle, lines):
             d.text((M+70, yy), line[3:], font=F_H2, fill=BLACK)
             yy += 90
         else:
-            d.text((M+90, yy), f'• {line}', font=F_BODY, fill=BLACK)
-            yy += 82
+            d.text((M+90, yy), '•', font=F_BODY_B, fill=BLACK)
+            for wrapped in wrapped_text(d, line, W - 2*M - 250, F_BODY):
+                d.text((M+145, yy), wrapped, font=F_BODY, fill=BLACK)
+                yy += 62
+            yy += 20
     return save_pdf(img, filename)
 
 

@@ -73,8 +73,13 @@ def paste_fit(canvas: Image.Image, source: Image.Image, box: tuple[int, int, int
 def make_2up(source_pdf: Path) -> Path:
     source = render_first_page(source_pdf)
     canvas = Image.new('RGB', (PAGE_W, PAGE_H), 'white')
-    paste_fit(canvas, source, (0, 0, PAGE_W, HALF_H - 18))
-    paste_fit(canvas, source, (0, HALF_H + 18, PAGE_W, PAGE_H))
+    # Leave a modest printable margin around each half-sheet so titles and icons
+    # do not sit on the physical page edge after scaling.
+    side_margin = 80
+    top_margin = 55
+    cut_gap = 34
+    paste_fit(canvas, source, (side_margin, top_margin, PAGE_W - side_margin, HALF_H - cut_gap))
+    paste_fit(canvas, source, (side_margin, HALF_H + cut_gap, PAGE_W - side_margin, PAGE_H - top_margin))
 
     draw = ImageDraw.Draw(canvas)
     y = HALF_H
