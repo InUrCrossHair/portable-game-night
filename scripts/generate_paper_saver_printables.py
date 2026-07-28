@@ -398,6 +398,160 @@ def merge_pdfs(output_name: str, paths: list[Path]) -> Path:
     return out
 
 
+def draw_bullets(draw: ImageDraw.ImageDraw, x: int, y: int, max_width: int, lines: list[str], fnt: ImageFont.FreeTypeFont = F_BODY) -> int:
+    for line in lines:
+        draw.text((x, y), '•', font=F_BODY_B, fill=BLACK)
+        for wrapped_line in wrapped(draw, line, max_width - 60, fnt):
+            draw.text((x + 50, y), wrapped_line, font=fnt, fill=BLACK)
+            y += fnt.size + 14
+        y += 18
+    return y
+
+
+def make_cover_page(out_dir: Path = OUT) -> Path:
+    img = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([M, 170, PAGE_W-M, PAGE_H-170], radius=46, outline=BLACK, width=9, fill=WHITE)
+    center(d, (M+80, 400, PAGE_W-M-80, 560), 'Portable Game Night', font(150, True))
+    center(d, (M+80, 575, PAGE_W-M-80, 690), 'Complete Binder Kit', font(92, True))
+    center(d, (M+120, 760, PAGE_W-M-120, 850), 'Cards • Dice • Score Sheets • Reference Digests • Reusable Boards', F_H)
+    d.line([M+220, 950, PAGE_W-M-220, 950], fill=BLACK, width=6)
+    yy = 1080
+    yy = draw_bullets(d, M+230, yy, PAGE_W-2*M-460, [
+        'Built for a portable physical game kit with the website as the full rules source.',
+        'Use standard playing cards, common dice, pencils, dry-erase sleeves, and tokens/candy/coins.',
+        'Includes section dividers so this can be sent as one print job and loaded directly into a binder.',
+        'No real-money betting required; use harmless markers and casual house limits.',
+    ], F_BODY)
+    center(d, (M+120, PAGE_H-620, PAGE_W-M-120, PAGE_H-520), 'Live site', F_H)
+    center(d, (M+120, PAGE_H-515, PAGE_W-M-120, PAGE_H-440), 'https://inurcrosshair.github.io/portable-game-night/', F_BODY_B)
+    center(d, (M+120, PAGE_H-330, PAGE_W-M-120, PAGE_H-260), 'Print, sleeve the reusable boards, and keep extra score sheets behind the master copies.', F_SMALL_B)
+    return save_multipage([img], out_dir / '_binder_cover.pdf')
+
+
+def make_start_here_page(out_dir: Path = OUT) -> Path:
+    img = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+    d = ImageDraw.Draw(img)
+    center(d, (M, 95, PAGE_W-M, 210), 'Start Here: How to Use This Binder', font(92, True))
+    sections = [
+        ('Best use', [
+            'Use the binder as the no-Wi-Fi / table backup. The live website remains the complete rules library.',
+            'Use the grouped digest and quick cards to pick games quickly; open the full site page when rules need more detail.',
+        ]),
+        ('Reusable pages', [
+            'Put boards, tracks, and betting mats in clear sheet protectors.',
+            'Use dry-erase markers, coins, candy, poker chips, or small tokens instead of writing directly on those pages.',
+        ]),
+        ('Score sheets', [
+            'Keep the full-size score sheets as clean master copies.',
+            'Use the compact 2-up score sheets as the first consumable stock, then reprint individual games that get used most.',
+        ]),
+        ('Printing notes', [
+            'Print one-sided if you want easy section separation and sheet protectors.',
+            'Print black-and-white/grayscale unless you want the cover and dividers to stand out more.',
+            'The quick-reference card pages are meant to be cut apart; print those on cardstock if possible.',
+        ]),
+    ]
+    y = 300
+    for title, bullets in sections:
+        d.rounded_rectangle([M, y, PAGE_W-M, y+92], radius=22, outline=BLACK, width=4, fill=LIGHT)
+        d.text((M+45, y+22), title, font=F_H, fill=BLACK)
+        y += 125
+        y = draw_bullets(d, M+70, y, PAGE_W-2*M-140, bullets, F_BODY)
+        y += 38
+    return save_multipage([img], out_dir / '_binder_start_here.pdf')
+
+
+def make_toc_page(out_dir: Path = OUT) -> Path:
+    img = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+    d = ImageDraw.Draw(img)
+    center(d, (M, 95, PAGE_W-M, 210), 'Binder Sections', font(98, True))
+    items = [
+        ('1. Quick Reference Digest', 'Grouped reminders for similar card and dice games.'),
+        ('2. Reusable Boards, Mats and Tracks', 'Full-size play surfaces for sheet protectors, dry erase, and tokens.'),
+        ('3. Full-Size Score Sheet Masters', 'Clean one-page originals for every write-on score sheet.'),
+        ('4. Compact Score Sheet Stock', 'Two copies of each compact 2-up score sheet for actual play use.'),
+        ('5. Cut-Apart Quick Cards', 'Two sets of 6-up quick-reference cards for table use.'),
+        ('6. Half-Sheet Reference Backup', 'All individual references two per page for broader no-phone backup.'),
+    ]
+    y = 360
+    for heading, desc in items:
+        d.rounded_rectangle([M+120, y, PAGE_W-M-120, y+185], radius=24, outline=BLACK, width=4, fill=WHITE)
+        d.text((M+170, y+28), heading, font=F_H, fill=BLACK)
+        d.text((M+170, y+100), desc, font=F_BODY, fill=BLACK)
+        y += 230
+    d.text((M+120, PAGE_H-210), 'Suggested binder setup: divider tabs for each section, sheet protectors for reusable boards, and a pocket for cut cards and loose score sheets.', font=F_SMALL_B, fill=BLACK)
+    return save_multipage([img], out_dir / '_binder_toc.pdf')
+
+
+def make_divider_page(title: str, subtitle: str, bullets: list[str], number: int, out_dir: Path = OUT) -> Path:
+    img = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, PAGE_W, 360], fill=DARK)
+    center(d, (M, 70, PAGE_W-M, 215), f'Section {number}', font(96, True), WHITE)
+    center(d, (M, 205, PAGE_W-M, 330), title, font(88, True), WHITE)
+    center(d, (M+100, 520, PAGE_W-M-100, 640), subtitle, F_H)
+    d.rounded_rectangle([M+170, 840, PAGE_W-M-170, 2100], radius=36, outline=BLACK, width=6, fill=LIGHT)
+    draw_bullets(d, M+260, 960, PAGE_W-2*M-520, bullets, F_BODY)
+    center(d, (M+100, PAGE_H-500, PAGE_W-M-100, PAGE_H-420), 'Portable Game Night Binder Kit', F_H)
+    center(d, (M+100, PAGE_H-405, PAGE_W-M-100, PAGE_H-340), 'Use the live site for full rules and updated downloads.', F_BODY)
+    safe = ''.join(ch.lower() if ch.isalnum() else '-' for ch in title).strip('-')
+    return save_multipage([img], out_dir / f'_binder_divider_{number}_{safe}.pdf')
+
+
+def make_complete_binder_kit(reference_digest: Path, compact_scores: Path, quick_cards: Path, reference_half: Path) -> Path:
+    reusable_bundle = PRINTABLES / 'bundles' / 'reusable-boards-mats-and-tracks-bundle.pdf'
+    score_masters = PRINTABLES / 'bundles' / 'write-on-score-sheets-bundle.pdf'
+
+    with TemporaryDirectory() as tmp:
+        tmp_dir = Path(tmp)
+        cover = make_cover_page(tmp_dir)
+        start = make_start_here_page(tmp_dir)
+        toc = make_toc_page(tmp_dir)
+        sections: list[Path] = [cover, start, toc]
+        sections += [
+            make_divider_page('Quick Reference Digest', 'A fast grouped overview for picking and teaching games.', [
+                'Use this section first when choosing a game.',
+                'Each page groups similar games together so you can compare options quickly.',
+                'Open the website when you need complete rules or game-specific details.',
+            ], 1, tmp_dir),
+            reference_digest,
+            make_divider_page('Reusable Boards, Mats and Tracks', 'Full-size table aids meant for sheet protectors and tokens.', [
+                'Put these pages in clear sheet protectors when possible.',
+                'Use dry-erase markers, coins, candy, chips, or tokens to mark progress.',
+                'Print an extra copy later if you expect multiple tables.',
+            ], 2, tmp_dir),
+            reusable_bundle,
+            make_divider_page('Full-Size Score Sheet Masters', 'Clean master copies for every write-on sheet.', [
+                'Use these as archive/master versions and teaching copies.',
+                'Photocopy or reprint individual sheets when a game becomes popular.',
+                'Keep compact score sheets behind this section for everyday use.',
+            ], 3, tmp_dir),
+            score_masters,
+            make_divider_page('Compact Score Sheet Stock', 'Paper-saving two-up score sheets for actual game-night use.', [
+                'This section includes two complete copies of the compact score-sheet bundle.',
+                'Cut sheets in half when useful, or leave them full page for easier handling.',
+                'Reprint only the games that run out fastest.',
+            ], 4, tmp_dir),
+            compact_scores,
+            compact_scores,
+            make_divider_page('Cut-Apart Quick Cards', 'Small table cards for common quick games.', [
+                'Two complete sets are included.',
+                'Print on cardstock if possible, then cut apart and keep in a pouch or binder pocket.',
+                'Use these for fast reminders; use the site or digest for fuller context.',
+            ], 5, tmp_dir),
+            quick_cards,
+            quick_cards,
+            make_divider_page('Half-Sheet Reference Backup', 'Individual reference sheets compressed two per page.', [
+                'This section is broader than the digest and keeps every individual reference available.',
+                'Use it when you want a specific game reference without relying on a phone.',
+                'The digest is faster; this section is more complete.',
+            ], 6, tmp_dir),
+            reference_half,
+        ]
+        return merge_pdfs('complete-binder-kit.pdf', sections)
+
+
 def main() -> None:
     reference_half = make_half_sheet_bundle(REFERENCE_PRINTABLES, 'reference-half-sheets-bundle.pdf', 'Reference half sheets')
     compact_score_files = [OUT.parent / 'compact' / f'{Path(name).stem}-2up.pdf' for name in COMPACT_SCORE_SOURCES]
@@ -411,8 +565,9 @@ def main() -> None:
     lean = merge_pdfs('lean-game-night-kit.pdf', reusable_paths + [quick_cards] + [compact_scores])
     digest_kit = merge_pdfs('digest-game-night-kit.pdf', reusable_paths + [reference_digest] + [compact_scores])
     full_saver = merge_pdfs('full-paper-saver-kit.pdf', reusable_paths + [reference_half] + [compact_scores])
+    binder = make_complete_binder_kit(reference_digest, compact_scores, quick_cards, reference_half)
 
-    outputs = [reference_half, reference_digest, compact_scores, quick_cards, lean, digest_kit, full_saver]
+    outputs = [reference_half, reference_digest, compact_scores, quick_cards, lean, digest_kit, full_saver, binder]
     for path in outputs:
         print(f'{path.relative_to(ROOT)}: {len(PdfReader(str(path)).pages)} pages')
 
