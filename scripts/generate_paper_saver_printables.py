@@ -199,6 +199,193 @@ def make_quick_cards() -> Path:
     return save_multipage(pages, OUT / 'quick-reference-cards-6up.pdf')
 
 
+DIGEST_GROUPS = [
+    ('Simple Dice and Push-Your-Luck', 'Fast dice fillers that teach quickly and use almost no table space.', [
+        ('Pig', 'Roll one die to build a turn score; bank anytime; roll 1 and lose unbanked turn points.'),
+        ('Going to Boston', 'Roll 3 dice, keep highest; roll 2, keep highest; roll 1; high total wins.'),
+        ('Beat That', 'Roll 2-4 dice and arrange them into the largest possible number.'),
+        ('Tenzi', 'Each player races to get all 10 dice showing the same chosen number.'),
+        ('Cho-Han', 'Call Cho/even or Han/odd before two dice are revealed.'),
+        ('Twenty-One Dice', 'Roll 2 dice, then stop or roll again; closest to 21 without busting wins.'),
+        ('Threes / Thirty', 'Roll 5-6 dice up to three times; threes count as 0; lowest score wins.'),
+    ]),
+    ('Bluffing Dice and Dice Rankings', 'Good for groups that like reading faces more than reading rulebooks.', [
+        ("Liar's Dice", 'Bid quantity/face across hidden dice; call liar to reveal; 1s are wild in this house version.'),
+        ('Mia', 'Two dice read high-first; 21/Mia beats doubles, doubles beat normal rolls.'),
+        ('Mexico', '21 is highest; doubles rank 66 to 11; other rolls read high die first.'),
+        ('Cee-lo', '4-5-6 best, 1-2-3 worst, triples rank high, pair plus odd die scores the point.'),
+        ('Poker Dice', 'Five kind, four kind, full house, straight, three kind, two pair, pair, high die.'),
+        ('Bar Dice', 'Roll up to three times; score by poker-style dice hand rankings.'),
+    ]),
+    ('Tokens, Pots and Betting Mats', 'Use candy, coins, chips, or harmless markers; no real-money value needed.', [
+        ('Aces in the Pot', 'Start with 3 tokens; 1s go to pot, 6s pass left; last player with tokens wins.'),
+        ('Left Center Right', 'Roll up to 3 dice: 1 left, 2 right, 3 center, 4-6 keep.'),
+        ('Help Your Neighbor', 'Players have numbers and tokens; rolled matching numbers remove tokens.'),
+        ('Craps Pass Line', 'Come-out 7/11 wins, 2/3/12 loses; point numbers must repeat before 7.'),
+        ('Chuck-a-Luck', 'Bet on 1-6; roll 3 dice; payout depends on how many dice match.'),
+        ('Sic Bo', 'Bet small/big, odd/even, exact totals, triples, or specific numbers.'),
+        ('In-Between', 'Bet whether the third card falls strictly between two face-up cards.'),
+    ]),
+    ('Fast Party Card Games', 'Best when you want quick rounds, laughter, and low setup time.', [
+        ('Crazy Eights', 'Match rank or suit; 8s are wild and choose the next suit; first out wins.'),
+        ('Spoons', 'Pass cards until someone makes four of a kind; once one spoon is grabbed, all may grab.'),
+        ('Slapjack', 'Flip cards to center; first flat-hand slap on a jack wins the pile.'),
+        ('BS / Cheat', 'Announce required ranks face down; callers challenge truthfulness; loser takes pile.'),
+        ('Shithead', 'Play equal/higher or pick up; special-card rules should be agreed before play.'),
+        ('Mao', 'Only explain basic play; hidden rules create penalties and chaos.'),
+    ]),
+    ('Trick-Taking and Hand Management', 'For groups that want more structure than party games, but still portable.', [
+        ('Euchre', 'Trump-taking teams game; makers score for taking 3 or more tricks; defenders score on euchre.'),
+        ('Hearts', 'Avoid hearts and queen of spades; lowest score wins; shoot the moon optional.'),
+        ('Spades', 'Bid tricks with a partner; make bid for points, miss bid for penalties.'),
+        ('Oh Hell', 'Bid exact tricks each hand; exact bid scores bonus; missed bid scores 0.'),
+        ('Knockout Whist', 'Take at least one trick each hand or get knocked out / lose a token.'),
+        ('President', 'Shedding game with ranks; first out becomes President next hand.'),
+        ('Durak', 'Attack/defend with trump; last player with cards is the fool.'),
+    ]),
+    ('Solitaire Setup Digest', 'Use these as setup reminders; full move details stay on the site pages.', [
+        ('Klondike', '7 columns, 1-7 cards; build alternating-color tableau; foundations ace to king.'),
+        ('FreeCell', 'All cards face up in 8 columns; use 4 free cells; foundations ace to king.'),
+        ('Pyramid', 'Remove exposed pairs totaling 13; kings remove alone; clear the pyramid.'),
+        ('Clock', '13 piles of 4; move revealed cards to rank piles; fourth king ends the game.'),
+        ('Golf', '7 columns of 5; move exposed cards one rank above/below the waste.'),
+        ('Canfield', '13-card reserve, 4 tableau piles, foundations start at dealt rank and wrap.'),
+        ('Spider', 'Two decks, 10 columns; build same-suit king-to-ace sequences to remove.'),
+        ('Accordion', 'Move piles left by rank/suit matches; compress deck into fewer piles.'),
+    ]),
+    ('Two-Player and Table Card Games', 'Good alternates when only two people want to play.', [
+        ('Speed', 'Both play simultaneously one rank up/down onto center piles; refill to 5 cards.'),
+        ('Spit', 'Build personal tableau, spit center cards, play up/down fast, slap smaller pile.'),
+        ('Kings in the Corner', 'Shared solitaire: descending alternating colors; only kings start corner piles.'),
+        ('Thirty-One', 'Draw/discard or knock; get close to 31 in one suit; lowest loses a life.'),
+        ('Indian Poker', 'One forehead card each; bet based on others cards; high card wins.'),
+        ('Poker Hands', 'Use as ranking reference for casual token poker.'),
+        ('Chase the Ace', 'Keep or swap one card; kings block swaps; lowest card loses a life.'),
+    ]),
+    ('Reaction, Signals and Oddballs', 'A catch-all page for games with special table behavior.', [
+        ('Kemps', 'Partners use a secret signal for four of a kind; opponents can call Counter-Kemps.'),
+        ('Egyptian Rat Screw', 'Face-card challenges plus legal slaps like doubles and sandwiches.'),
+        ('Ship, Captain, Crew', 'Lock 6, then 5, then 4; remaining two dice are cargo.'),
+        ('Ninety-Nine', 'Keep running total at/below 99; special card effects shift the total.'),
+        ('Poker / Ranking reminders', 'Agree tie-breaks, token limits, and house variants before play.'),
+        ('Safety note', 'Use flat-hand slaps, small tokens, water/skips for drinking variants, and no pressure.'),
+    ]),
+]
+
+
+def draw_digest_page(title: str, subtitle: str, entries: list[tuple[str, str]]) -> Image.Image:
+    canvas = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+    draw = ImageDraw.Draw(canvas)
+    draw.rounded_rectangle([M, 70, PAGE_W-M, 225], radius=34, outline=BLACK, width=6, fill=LIGHT)
+    center(draw, (M+35, 86, PAGE_W-M-35, 154), title, F_TITLE)
+    center(draw, (M+45, 154, PAGE_W-M-45, 214), subtitle, F_SMALL)
+
+    gap = 56
+    col_w = (PAGE_W - 2*M - gap) // 2
+    x_positions = [M, PAGE_W//2 + gap//2]
+    y_start = 290
+    y = [y_start, y_start]
+    body_font = font(31)
+    name_font = font(34, True)
+
+    for idx, (name, text) in enumerate(entries):
+        col = idx % 2 if len(entries) > 6 else (0 if idx < (len(entries)+1)//2 else 1)
+        x = x_positions[col]
+        lines = wrapped(draw, text, col_w - 56, body_font)
+        block_h = 54 + 38*len(lines) + 38
+        if y[col] + block_h > PAGE_H - 150 and col == 0:
+            col = 1
+            x = x_positions[col]
+        yy = y[col]
+        draw.rounded_rectangle([x, yy, x+col_w, yy+block_h], radius=22, outline=(120,120,120), width=3, fill=WHITE)
+        draw.text((x+24, yy+18), name, font=name_font, fill=BLACK)
+        text_y = yy + 72
+        for line in lines:
+            draw.text((x+30, text_y), line, font=body_font, fill=BLACK)
+            text_y += 38
+        y[col] = yy + block_h + 30
+
+    draw.text((M, PAGE_H-88), 'Paper Saver Digest - full rules, score sheets, and printable downloads are on the Portable Game Night site.', font=F_SMALL_B, fill=BLACK)
+    return canvas
+
+
+def draw_digest_section(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], title: str, subtitle: str, entries: list[tuple[str, str]]) -> None:
+    x1, y1, x2, y2 = box
+    draw.rounded_rectangle([x1, y1, x2, y2], radius=28, outline=BLACK, width=5, fill=WHITE)
+    draw.rectangle([x1, y1, x2, y1+86], fill=LIGHT, outline=BLACK, width=4)
+    title_font = font(52, True)
+    while draw.textbbox((0, 0), title, font=title_font)[2] > (x2-x1-50) and title_font.size > 38:
+        title_font = font(title_font.size - 2, True)
+    center(draw, (x1+25, y1+8, x2-25, y1+58), title, title_font)
+    center(draw, (x1+30, y1+55, x2-30, y1+84), subtitle, font(20))
+
+    gap = 28
+    col_w = (x2 - x1 - 60 - gap) // 2
+    xs = [x1+30, x1+30+col_w+gap]
+    ys = [y1+112, y1+112]
+    name_font = font(24, True)
+    body_font = font(22)
+    for idx, (name, text) in enumerate(entries):
+        col = idx % 2 if len(entries) > 6 else (0 if idx < (len(entries)+1)//2 else 1)
+        tx = xs[col]
+        lines = wrapped(draw, text, col_w - 24, body_font)
+        block_h = 34 + 26*len(lines) + 18
+        if ys[col] + block_h > y2 - 28 and col == 0:
+            col = 1
+            tx = xs[col]
+        ty = ys[col]
+        draw.rounded_rectangle([tx, ty, tx+col_w, ty+block_h], radius=12, outline=(150,150,150), width=2, fill=(252,252,252))
+        draw.text((tx+12, ty+9), name, font=name_font, fill=BLACK)
+        yy = ty + 40
+        for line in lines[:4]:
+            draw.text((tx+14, yy), line, font=body_font, fill=BLACK)
+            yy += 26
+        ys[col] = ty + block_h + 14
+
+
+def make_reference_digest() -> Path:
+    pages: list[Image.Image] = []
+    batches = [DIGEST_GROUPS[0:3], DIGEST_GROUPS[3:6], DIGEST_GROUPS[6:8]]
+    section_boxes_3 = [
+        (M, 150, PAGE_W-M, 1040),
+        (M, 1080, PAGE_W-M, 1970),
+        (M, 2010, PAGE_W-M, PAGE_H-120),
+    ]
+    section_boxes_2 = [
+        (M, 150, PAGE_W-M, 1260),
+        (M, 1300, PAGE_W-M, 2410),
+    ]
+    for page_no, batch in enumerate(batches, 1):
+        canvas = Image.new('RGB', (PAGE_W, PAGE_H), WHITE)
+        draw = ImageDraw.Draw(canvas)
+        center(draw, (0, 36, PAGE_W, 120), 'Portable Game Night • Grouped Reference Digest', F_TITLE)
+        boxes = section_boxes_3 if len(batch) == 3 else section_boxes_2
+        for group, box in zip(batch, boxes):
+            title, subtitle, entries = group
+            draw_digest_section(draw, box, title, subtitle, entries)
+        if len(batch) == 2:
+            # Use the final third of the last page for practical print guidance instead of dead white space.
+            box = (M, 2450, PAGE_W-M, PAGE_H-120)
+            draw.rounded_rectangle(box, radius=28, outline=BLACK, width=5, fill=LIGHT)
+            center(draw, (box[0]+30, box[1]+20, box[2]-30, box[1]+82), 'Suggested Paper-Saver Print Plan', font(50, True))
+            plan_lines = [
+                '1) Start with the Digest Game Night kit for the smallest useful binder set.',
+                '2) Print extra compact score sheets only for the games you expect to play often.',
+                '3) Keep full-page PDFs available for low-vision players, teaching tables, or dense score sheets.',
+                '4) Use the site pages for full rules; this digest is meant as a table reminder.',
+            ]
+            yy = box[1] + 115
+            for line in plan_lines:
+                draw.text((box[0]+55, yy), '•', font=F_SMALL_B, fill=BLACK)
+                for wrapped_line in wrapped(draw, line, box[2]-box[0]-150, F_SMALL):
+                    draw.text((box[0]+92, yy), wrapped_line, font=F_SMALL, fill=BLACK)
+                    yy += 38
+                yy += 10
+        draw.text((M, PAGE_H-82), 'Paper Saver Digest - grouped quick reminders. Full rules, score sheets, and downloads are on the Portable Game Night site.', font=F_SMALL_B, fill=BLACK)
+        pages.append(canvas)
+    return save_multipage(pages, OUT / 'reference-digest-bundle.pdf')
+
+
 def merge_pdfs(output_name: str, paths: list[Path]) -> Path:
     writer = PdfWriter()
     for path in paths:
@@ -219,11 +406,13 @@ def main() -> None:
             raise FileNotFoundError(f'Missing compact score sheet: {path}')
     compact_scores = merge_pdfs('compact-score-sheets-bundle.pdf', compact_score_files)
     quick_cards = make_quick_cards()
+    reference_digest = make_reference_digest()
     reusable_paths = [PRINTABLES / name for name in REUSABLE_PRINTABLES]
     lean = merge_pdfs('lean-game-night-kit.pdf', reusable_paths + [quick_cards] + [compact_scores])
+    digest_kit = merge_pdfs('digest-game-night-kit.pdf', reusable_paths + [reference_digest] + [compact_scores])
     full_saver = merge_pdfs('full-paper-saver-kit.pdf', reusable_paths + [reference_half] + [compact_scores])
 
-    outputs = [reference_half, compact_scores, quick_cards, lean, full_saver]
+    outputs = [reference_half, reference_digest, compact_scores, quick_cards, lean, digest_kit, full_saver]
     for path in outputs:
         print(f'{path.relative_to(ROOT)}: {len(PdfReader(str(path)).pages)} pages')
 
