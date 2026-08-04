@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 SOURCE = Path('/mnt/c/Users/code3/OneDrive/Desktop/Atlas_Project_Records/Card-Dice Games/dice_games.md')
 
 from data.game_data import CARD_GAMES, GAMES
+from data.beginner_addenda import BEGINNER_ADDENDA
 DIFFICULTY_ORDER = {
     'Very Easy': 0,
     'Easy': 1,
@@ -345,7 +346,6 @@ def game_card(g: dict, depth: int = 0) -> str:
   <p>{html.escape(g['vibe'])}</p>
   <dl class="quick-dl"><div><dt>Players</dt><dd>{html.escape(g['players'])}</dd></div><div><dt>Dice</dt><dd>{html.escape(g['dice'])}</dd></div></dl>
   {tag_list(top_tags)}
-  <p class="status"><strong>Status:</strong> {html.escape(g['status'])}</p>
 </article>'''
 
 
@@ -429,6 +429,7 @@ def build_game_pages(sections: dict[str, str]) -> None:
     for g in GAMES:
         rules = strip_source_quick_facts(sections.get(g['slug'], ''))
         rules_html = g.get('rules_html') or (md_to_html(rules) if rules else '<p>Rules content still needs to be imported.</p>')
+        rules_html += '\n' + BEGINNER_ADDENDA.get(g['slug'], '')
         printable_downloads = printable_items(g, depth=2)
         printable_previews = printable_preview_section(g, depth=2)
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
@@ -448,7 +449,6 @@ def build_game_pages(sections: dict[str, str]) -> None:
       <div><dt>Dice needed</dt><dd>{html.escape(g['dice'])}</dd></div>
       <div><dt>Typical length</dt><dd>{html.escape(g['time'])}</dd></div>
       <div><dt>Complexity</dt><dd>{html.escape(g['complexity'])}</dd></div>
-      <div><dt>Status</dt><dd>{html.escape(g['status'])}</dd></div>
     </dl>
   </section>
 
@@ -573,6 +573,7 @@ def build_card_game_pages() -> None:
     for g in CARD_GAMES:
         needs_items = ''.join(f'<li>{html.escape(n)}</li>' for n in g['needs'])
         printable_previews = printable_preview_section(g, depth=2)
+        rules_html = g['rules_html'] + '\n' + BEGINNER_ADDENDA.get(g['slug'], '')
         body = f'''<p class="breadcrumb"><a href="../../">← Home</a> / <a href="../">Card Games</a></p>
 <article class="game-page">
   <header class="hero compact-hero game-hero">
@@ -590,7 +591,6 @@ def build_card_game_pages() -> None:
       <div><dt>Optional extra deck</dt><dd>{html.escape(g['optional_deck'])}</dd></div>
       <div><dt>Typical length</dt><dd>{html.escape(g['time'])}</dd></div>
       <div><dt>Complexity</dt><dd>{html.escape(g['complexity'])}</dd></div>
-      <div><dt>Status</dt><dd>{html.escape(g['status'])}</dd></div>
     </dl>
   </section>
 
@@ -609,7 +609,7 @@ def build_card_game_pages() -> None:
 
   <section class="rules panel">
     <h2>Rules</h2>
-    {g['rules_html']}
+    {rules_html}
   </section>
 </article>'''
         write(ROOT / f'cards/{g["slug"]}/index.html', layout(g['name'], body, 2, f'Rules and quick reference for {g["name"]}.'))
